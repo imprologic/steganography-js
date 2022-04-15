@@ -1,5 +1,8 @@
-import HomePage from './HomePage';
+import Home from './Home';
+import Extract from './Extract';
+
 
 export {
-	HomePage
+	Home,
+	Extract
 };
