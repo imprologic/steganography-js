@@ -1,11 +1,8 @@
-import { MainMenu } from '../widgets';
+
 
 const Extract = () => {
 	return (
 		<>
-			<header>
-				<MainMenu />
-			</header>
 			<h1>Extract Text from PNG</h1>
 		</>
 	);

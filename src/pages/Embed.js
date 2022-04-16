@@ -1,12 +1,11 @@
-import { MainMenu } from '../widgets';
+import { FilePicker } from "../widgets"
+
 
 const Embed = () => {
 	return (
 		<>
-			<header>
-				<MainMenu />
-			</header>
 			<h1>Embed Text into PNG</h1>
+			<FilePicker />
 		</>
 	);
 };
