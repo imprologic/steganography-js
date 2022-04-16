@@ -1,13 +1,16 @@
-import { useState } from 'react';
 
 const FilePicker = () => {
-	const [selectedFile, setSelectedFile] = useState();
-	const [isFilePicked, setIsFilePicked] = useState(false);
+
+	const readHandler = (event) => {
+		const content = event.target.result;
+		console.log(content);
+	};
 
 	const changeHandler = (event) => {
-		setSelectedFile(event.target.files[0]);
-		console.log(event.target.files[0]);
-		setIsFilePicked(true);
+		const file = event.target.files[0];
+		const reader = new FileReader();
+		reader.onload = readHandler;
+		reader.readAsArrayBuffer(file);
 	};
 
 
