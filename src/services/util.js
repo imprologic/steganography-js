@@ -11,3 +11,19 @@ export const arrayBufferToPng = (arrayBuffer) => {
 		}
 	);
 };
+
+
+export const stringToBytes = (text) => {
+	const utf8Encode = new TextEncoder();
+	return utf8Encode.encode(text);
+};
+
+
+export const byteToBits = (byte) => {
+	const result = [];
+	for (let position = 0; position < 8; position++) {
+		result.push(byte & 0x01);
+		byte = byte >> 1;
+	}
+	return result;
+};

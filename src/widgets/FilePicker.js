@@ -1,12 +1,13 @@
-import { arrayBufferToPng } from "../services/util";
-
-const FilePicker = () => {
 
 
-	const readHandler = async (event) => {
+const FilePicker = ({
+	onImageSelected
+}) => {
+
+
+	const readHandler = (event) => {
 		const content = event.target.result;
-		const image = await arrayBufferToPng(content);
-		console.log(image);
+		onImageSelected(content);
 	};
 
 	const changeHandler = (event) => {
