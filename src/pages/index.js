@@ -1,8 +1,8 @@
-import Home from './Home';
+import Embed from './Embed';
 import Extract from './Extract';
 
 
 export {
-	Home,
+	Embed,
 	Extract
 };

@@ -1,0 +1,8 @@
+.MainMenu {
+	text-align: right;
+	padding: 1rem 0;
+}
+
+.MainMenu a {
+	padding: 0 0.5rem;
+}

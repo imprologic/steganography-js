@@ -1,14 +1,14 @@
 import { MainMenu } from '../widgets';
 
-const Extract = () => {
+const Embed = () => {
 	return (
 		<>
 			<header>
 				<MainMenu />
 			</header>
-			<h1>Extract Text from PNG</h1>
+			<h1>Embed Text into PNG</h1>
 		</>
 	);
 };
 
-export default Extract;
+export default Embed;
