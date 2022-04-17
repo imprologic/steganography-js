@@ -1,6 +1,6 @@
 import { FilePicker } from '../widgets';
 import { useState } from 'react';
-import { arrayBufferToPng, stringToBytes } from '../services/util';
+import { arrayBufferToPng, stringToBytes, byteToBits, pngToBuffer, downloadBlob } from '../services/util';
 
 
 const Embed = () => {
@@ -14,12 +14,24 @@ const Embed = () => {
 
 
 	const process = async () => {
+		const bytes = stringToBytes(message);
 		if (content) {
 			const image = await arrayBufferToPng(content);
-			console.log(image);
+			const data = image.data;
+			console.log(data);
+			let index = 0;
+			for (const byte of bytes) {
+				const bits = byteToBits(byte);
+				for (const bit of bits) {
+					data[index] = (data[index] & 0xFE) | bit;
+					index++;
+				}
+			}
+			console.log(data);
+			const buffer = pngToBuffer(image);
+			console.log(buffer);
+			downloadBlob(buffer, 'test.png', 'image/png');
 		}
-		const bytes = stringToBytes(message);
-		console.log(bytes);
 	};
 
 

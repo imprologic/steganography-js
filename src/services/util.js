@@ -1,6 +1,6 @@
 import { PNG } from 'pngjs/browser';
 
-export const arrayBufferToPng = (arrayBuffer) => { 
+export const arrayBufferToPng = (arrayBuffer) => {
 	const png = new PNG({ filterType: 4 });
 	return new Promise(
 		(resolve, reject) => {
@@ -11,6 +11,11 @@ export const arrayBufferToPng = (arrayBuffer) => {
 		}
 	);
 };
+
+
+export const pngToBuffer = (png) => {
+	return PNG.sync.write(png);
+}
 
 
 export const stringToBytes = (text) => {
@@ -30,4 +35,29 @@ export const byteToBits = (byte) => {
 		(byte >>> 1) & 1,
 		byte & 1,
 	];
+};
+
+
+export const downloadBlob = (data, fileName, mimeType) => {
+	var blob, url;
+	blob = new Blob([data], {
+		type: mimeType
+	});
+	url = window.URL.createObjectURL(blob);
+	downloadURL(url, fileName);
+	setTimeout(function () {
+		return window.URL.revokeObjectURL(url);
+	}, 1000);
+};
+
+
+export const downloadURL = (data, fileName) => {
+	var a;
+	a = document.createElement('a');
+	a.href = data;
+	a.download = fileName;
+	document.body.appendChild(a);
+	a.style = 'display: none';
+	a.click();
+	a.remove();
 };
