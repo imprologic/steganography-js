@@ -20,7 +20,7 @@ export const pngToBuffer = (png) => {
 
 export const stringToBytes = (text) => {
 	const utf8Encode = new TextEncoder();
-	return utf8Encode.encode(text);
+	return Array.from(utf8Encode.encode(text));
 };
 
 
@@ -38,12 +38,37 @@ export const byteToBits = (byte) => {
 };
 
 
+export const stringToBits = (text) => {
+	const nested = stringToBytes(text).map(byteToBits);
+	return [].concat(...nested);
+};
+
+
+/**
+ * Takes an array buffer, decodes it as PNG, embeds the text and then encodes the array buffer back to PNG.
+ * @param {*} arrayBuffer Image bytes in PNG format
+ * @param {*} text Byte array
+ */
+export const embedMessage = async (arrayBuffer, message) => {
+	const png = await arrayBufferToPng(arrayBuffer);
+	const data = png.data;
+	let index = 0;
+	for (const byte of message) {
+		const bits = byteToBits(byte);
+		for (const bit of bits) {
+			data[index] = (data[index] & 0xFE) | bit;
+			index++;
+		}
+	}
+	return pngToBuffer(png);
+}
+
+
 export const downloadBlob = (data, fileName, mimeType) => {
-	var blob, url;
-	blob = new Blob([data], {
+	const blob = new Blob([data], {
 		type: mimeType
 	});
-	url = window.URL.createObjectURL(blob);
+	const url = window.URL.createObjectURL(blob);
 	downloadURL(url, fileName);
 	setTimeout(function () {
 		return window.URL.revokeObjectURL(url);
@@ -52,8 +77,7 @@ export const downloadBlob = (data, fileName, mimeType) => {
 
 
 export const downloadURL = (data, fileName) => {
-	var a;
-	a = document.createElement('a');
+	const a = document.createElement('a');
 	a.href = data;
 	a.download = fileName;
 	document.body.appendChild(a);

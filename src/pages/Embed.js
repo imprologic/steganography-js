@@ -17,6 +17,7 @@ const Embed = () => {
 		const bytes = stringToBytes(message);
 		if (content) {
 			const image = await arrayBufferToPng(content);
+			console.log(image);
 			const data = image.data;
 			console.log(data);
 			let index = 0;
