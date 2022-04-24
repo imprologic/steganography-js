@@ -6,7 +6,8 @@ import { stringToBytes, downloadBlob, embedMessage } from '../services/util';
 const Embed = () => {
 
 	const [ content, setContent ] = useState(null);
-	const text = 'The rain in Spain...';
+	const [ text, setText ] = useState(null);
+	const [ pass, setPass ] = useState(null);
 
 	const onImageSelected = (content) => {
 		setContent(content);
@@ -26,6 +27,14 @@ const Embed = () => {
 		<>
 			<h1>Embed Text into PNG</h1>
 			<FilePicker onImageSelected={onImageSelected} />
+			<div>
+				<label>Message</label>
+				<input type="text" onChange={ (e) => setText(e.target.value) } />
+			</div>
+			<div>
+				<label>Passphrase</label>
+				<input type="text" onChange={ (e) => setPass(e.target.value) } />
+			</div>
 			<div>
 				<button onClick={process}>Process</button>
 			</div>

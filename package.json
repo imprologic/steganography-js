@@ -9,6 +9,7 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "crypto-js": "^4.1.1",
     "pngjs": "^6.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

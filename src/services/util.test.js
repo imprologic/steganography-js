@@ -1,5 +1,5 @@
 import { PNG } from 'pngjs/browser';
-import { stringToBytes, byteToBits, pngToBuffer, embedMessage, arrayBufferToPng, stringToBits } from './util';
+import { stringToBytes, byteToBits, pngToBuffer, embedMessage, arrayBufferToPng, stringToBits, getTerminator } from './util';
 
 
 test('stringToBytes', () => {
@@ -75,4 +75,13 @@ test('embedArray', async () => {
 	for (const [index, bit] of bits1.entries()) {
 		expect(data2[index] & 0x01).toBe(bit);
 	}
+});
+
+
+test('getTerminator', () => {
+	const pass = 'Ragnar Danneskjöld';
+	const result = getTerminator(pass).map(
+		byte => (byte).toString(16).padStart(2, '0')
+	).join('');
+	expect(result).toEqual('6fe1371a219fed273543b619860b9b44c893060438bcde681837783a5eae9c73');
 });

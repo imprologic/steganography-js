@@ -1,4 +1,5 @@
 import { PNG } from 'pngjs/browser';
+import sha256 from 'crypto-js/sha256';
 
 export const arrayBufferToPng = (arrayBuffer) => {
 	const png = new PNG({ filterType: 4 });
@@ -84,4 +85,17 @@ export const downloadURL = (data, fileName) => {
 	a.style = 'display: none';
 	a.click();
 	a.remove();
+};
+
+
+export const getTerminator = (pass) => {
+	const nested = sha256(pass).words.map(
+		word => [
+			word >>> 24,
+			(word >>> 16) & 0xff,
+			(word >>> 8) & 0xff,
+			word & 0xff,
+		]
+	);
+	return [].concat(...nested);
 };
