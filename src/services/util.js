@@ -25,6 +25,12 @@ export const stringToBytes = (text) => {
 };
 
 
+export const bytesToString = (bytes) => {
+	const utf8EDecoder = new TextDecoder();
+	return utf8EDecoder.decode(new Uint8Array(bytes));
+};
+
+
 export const byteToBits = (byte) => {
 	return [
 		(byte >>> 7) & 1,
@@ -45,15 +51,10 @@ export const stringToBits = (text) => {
 };
 
 
-/**
- * Takes an array buffer, decodes it as PNG, embeds the text and then encodes the array buffer back to PNG.
- * @param {*} arrayBuffer Image bytes in PNG format
- * @param {*} text Byte array
- */
-export const embedMessage = async (arrayBuffer, message) => {
-	const png = await arrayBufferToPng(arrayBuffer);
-	const data = png.data;
-	let index = 0;
+
+export const writeToArrayLsb = (data, message, startIndex) => {
+	let index = startIndex;
+	// write the actual message
 	for (const byte of message) {
 		const bits = byteToBits(byte);
 		for (const bit of bits) {
@@ -61,6 +62,45 @@ export const embedMessage = async (arrayBuffer, message) => {
 			index++;
 		}
 	}
+	return index;
+};
+
+
+// export const readFromArrayLsb = (data, message, endIndex) => {
+// 	let index = 0;
+// 	// write the actual message
+// 	for (const byte of message) {
+// 		const bits = byteToBits(byte);
+// 		for (const bit of bits) {
+// 			data[index] = (data[index] & 0xFE) | bit;
+// 			index++;
+// 		}
+// 	}
+// 	return index;
+// };
+
+
+/**
+ * Takes an array buffer, decodes it as PNG, embeds the text and then encodes the array buffer back to PNG.
+ * @param {*} arrayBuffer Image bytes in PNG format
+ * @param {*} text Byte array
+ * TODO: Make sure the message + terminator does not overflow the PNG buffer
+ */
+export const embedMessage = async (arrayBuffer, message, pass) => {
+	const png = await arrayBufferToPng(arrayBuffer);
+	const data = png.data;
+	let index = 0;
+	// write the actual message
+	for (const byte of message) {
+		const bits = byteToBits(byte);
+		for (const bit of bits) {
+			data[index] = (data[index] & 0xFE) | bit;
+			index++;
+		}
+	}
+	// write the terminator
+	// const terminator = getTerminator(pass);
+
 	return pngToBuffer(png);
 }
 

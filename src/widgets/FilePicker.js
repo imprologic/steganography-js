@@ -20,7 +20,7 @@ const FilePicker = ({
 
 	return (
 		<div>
-			<input type="file" name="file" onChange={changeHandler} />
+			<input type="file" name="file" onChange={changeHandler} accept=".png" />
 		</div>
 	);
 };

@@ -1,11 +1,28 @@
-import { PNG } from 'pngjs/browser';
-import { stringToBytes, byteToBits, pngToBuffer, embedMessage, arrayBufferToPng, stringToBits, getTerminator } from './util';
+import { 
+	stringToBytes, 
+	byteToBits, 
+	pngToBuffer, 
+	embedMessage, 
+	arrayBufferToPng, 
+	stringToBits, 
+	getTerminator, 
+	writeToArrayLsb, 
+	bytesToString
+} from './util';
 
 
 test('stringToBytes', () => {
 	const bytes = stringToBytes('AB');
 	const expected = Uint8Array.from([65, 66]);
 	expect(bytes.toString()).toEqual(expected.toString());	// Jest sees `expected` as an object rather than an array
+});
+
+
+test('bytesToString', () => {
+	const expected = 'Ragnar Danneskjöld';
+	const bytes = stringToBytes(expected);
+	const result = bytesToString(bytes);
+	expect(result).toEqual(expected);
 });
 
 
@@ -41,6 +58,25 @@ test('stringToBits', () => {
 	];
 	const result = stringToBits(text);
 	expect(result).toEqual(expected);
+});
+
+
+test('writeToArrayLsb', () => {
+	const text = 'Who is John Galt?'
+	const message = stringToBytes(text);
+	const expected = stringToBits(text);
+	const data = Array.from(
+		{ length: message.length * 8 },
+		( _, i ) => i % 256
+	);
+	const nextIndex = writeToArrayLsb(data, message, 0);
+	expect(nextIndex).toEqual(data.length);
+	let index = 0;
+	for (const byte of data) {
+		const lsb = byte & 0x01;
+		expect(lsb).toEqual(expected[index]);
+		index++;
+	}
 });
 
 
