@@ -17,7 +17,7 @@ const Embed = () => {
 	const process = async () => {
 		if (content) {
 			const message = stringToBytes(text);
-			const file = await embedMessage(content, message);
+			const file = await embedMessage(content, message, pass);
 			downloadBlob(file, 'test.png', 'image/png');
 		}
 	};

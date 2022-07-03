@@ -111,10 +111,12 @@ test('readFromArrayLsb', () => {
 });
 
 
-test('embedArray', async () => {
-	const text = 'Who is John Galt?'
+test('embedMessage', async () => {
+	const text = 'Who is John Galt?';
 	const message = stringToBytes(text);
-	const pixelsNeeded = message.length * 8 / 4;
+	const pass = '4tlasShrugg3d';
+	const terminator = getTerminator(pass);
+	const pixelsNeeded = (message.length + terminator.length) * 8 / 4;
 	const imageSize = Math.ceil(Math.sqrt(pixelsNeeded));
 	// generate a small PNG using a Fibonacci series
 	let sum = 0;
@@ -131,17 +133,15 @@ test('embedArray', async () => {
 		data: Uint8Array.from(data)
 	};
 	const file1 = pngToBuffer(png1);
-	// embed the message
-	const file2 = await embedMessage(file1, message);
+	// embed the message and the terminator
+	const file2 = await embedMessage(file1, [...message, ...terminator]);
 	// decode the resulting png file
 	const png2 = await arrayBufferToPng(file2);
 	const data2 = png2.data;
-	// get the bits from the message and match them with the data in png2
-	const bits1 = stringToBits(text);
-	expect(bits1.length).toBeLessThanOrEqual(data2.length);
-	for (const [index, bit] of bits1.entries()) {
-		expect(data2[index] & 0x01).toBe(bit);
-	}
+	// decode the data and match it with the message and the terminator
+	const content = readFromArrayLsb(data2, (message.length + terminator.length) * 8);
+	expect(content.slice(0, message.length)).toEqual(message);
+	expect(content.slice(message.length)).toEqual(terminator);
 });
 
 

@@ -82,7 +82,15 @@ export const writeToArrayLsb = (data, message, startIndex) => {
 };
 
 
+/**
+ * Reads the embedded content from an array.
+ * @param {*} data The array providing the content.
+ * @param {*} endIndex The content's length. Must be a multiple of 8.
+ */
 export const readFromArrayLsb = (data, endIndex) => {
+	if (endIndex % 8 !== 0) {
+		throw new Error(`readFromArrayLsb: Argument endIndex should be a multiple of 8. Received ${endIndex}`);
+	}
 	const bytes = [];
 	let bits = [];
 	for (let index = 0; index < endIndex; index++) {
@@ -109,18 +117,12 @@ export const readFromArrayLsb = (data, endIndex) => {
 export const embedMessage = async (arrayBuffer, message, pass) => {
 	const png = await arrayBufferToPng(arrayBuffer);
 	const data = png.data;
-	let index = 0;
-	// write the actual message
-	for (const byte of message) {
-		const bits = byteToBits(byte);
-		for (const bit of bits) {
-			data[index] = (data[index] & 0xFE) | bit;
-			index++;
-		}
-	}
+	// write the data and return the index
+	const terminatorIndex = writeToArrayLsb(data, message, 0);
 	// write the terminator
-	// const terminator = getTerminator(pass);
-
+	const terminator = getTerminator(pass);
+	writeToArrayLsb(data, terminator, terminatorIndex);
+	// return a PNG buffer
 	return pngToBuffer(png);
 }
 
@@ -148,6 +150,10 @@ export const downloadURL = (data, fileName) => {
 };
 
 
+/**
+ * Returns the sha2 hash of a password as an array of bytes.
+ * @param {*} pass 
+ */
 export const getTerminator = (pass) => {
 	const nested = sha256(pass).words.map(
 		word => [
