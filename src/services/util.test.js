@@ -7,7 +7,9 @@ import {
 	stringToBits, 
 	getTerminator, 
 	writeToArrayLsb, 
-	bytesToString
+	bytesToString,
+	bitsToByte,
+	readFromArrayLsb
 } from './util';
 
 
@@ -50,6 +52,22 @@ test('byteToBits - zeros and ones', () => {
 });
 
 
+test('bitsToByte - ones and zeros', () => {
+	const byte = parseInt('10101010', 2);
+	const bits = byteToBits(byte);
+	const result = bitsToByte(bits);
+	expect(result).toEqual(byte);
+});
+
+
+test('bitsToByte - zeros and ones', () => {
+	const byte = parseInt('01010101', 2);
+	const bits = byteToBits(byte);
+	const result = bitsToByte(bits);
+	expect(result).toEqual(byte);
+});
+
+
 test('stringToBits', () => {
 	const text = String.fromCharCode(63, 127);
 	const expected = [
@@ -77,6 +95,19 @@ test('writeToArrayLsb', () => {
 		expect(lsb).toEqual(expected[index]);
 		index++;
 	}
+});
+
+
+test('readFromArrayLsb', () => {
+	const text = 'Who is John Galt?'
+	const message = stringToBytes(text);
+	const data = Array.from(
+		{ length: message.length * 8 },
+		( _, i ) => i % 256
+	);
+	writeToArrayLsb(data, message, 0);
+	const result = readFromArrayLsb(data, data.length);
+	expect(result).toEqual(message);
 });
 
 

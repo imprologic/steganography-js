@@ -45,6 +45,22 @@ export const byteToBits = (byte) => {
 };
 
 
+/**
+ * Converts an array of 8 bits to a byte.
+ */
+export const bitsToByte = (bits) => {
+	return (bits[0] << 7) | 
+		(bits[1] << 6) | 
+		(bits[2] << 5) | 
+		(bits[3] << 4) | 
+		(bits[4] << 3) | 
+		(bits[5] << 2) | 
+		(bits[6] << 1) | 
+		bits[7]
+		;
+};
+
+
 export const stringToBits = (text) => {
 	const nested = stringToBytes(text).map(byteToBits);
 	return [].concat(...nested);
@@ -66,18 +82,22 @@ export const writeToArrayLsb = (data, message, startIndex) => {
 };
 
 
-// export const readFromArrayLsb = (data, message, endIndex) => {
-// 	let index = 0;
-// 	// write the actual message
-// 	for (const byte of message) {
-// 		const bits = byteToBits(byte);
-// 		for (const bit of bits) {
-// 			data[index] = (data[index] & 0xFE) | bit;
-// 			index++;
-// 		}
-// 	}
-// 	return index;
-// };
+export const readFromArrayLsb = (data, endIndex) => {
+	const bytes = [];
+	let bits = [];
+	for (let index = 0; index < endIndex; index++) {
+		const lsb = data[index] & 0x01;
+		bits.push(lsb);
+		if (bits.length === 8) {
+			bytes.push(bitsToByte(bits));
+			bits = [];
+		}
+	}
+	if (bits.length > 0) {
+		bytes.push(bitsToByte(bits));
+	}
+	return bytes;
+};
 
 
 /**
