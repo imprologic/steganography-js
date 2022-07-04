@@ -49,13 +49,13 @@ export const byteToBits = (byte) => {
  * Converts an array of 8 bits to a byte.
  */
 export const bitsToByte = (bits) => {
-	return (bits[0] << 7) | 
-		(bits[1] << 6) | 
-		(bits[2] << 5) | 
-		(bits[3] << 4) | 
-		(bits[4] << 3) | 
-		(bits[5] << 2) | 
-		(bits[6] << 1) | 
+	return (bits[0] << 7) |
+		(bits[1] << 6) |
+		(bits[2] << 5) |
+		(bits[3] << 4) |
+		(bits[4] << 3) |
+		(bits[5] << 2) |
+		(bits[6] << 1) |
 		bits[7]
 		;
 };
@@ -112,6 +112,7 @@ export const readFromArrayLsb = (data, endIndex) => {
  * Takes an array buffer, decodes it as PNG, embeds the text and then encodes the array buffer back to PNG.
  * @param {*} arrayBuffer Image bytes in PNG format
  * @param {*} text Byte array
+ * @param {*} pass String
  * TODO: Make sure the message + terminator does not overflow the PNG buffer
  */
 export const embedMessage = async (arrayBuffer, message, pass) => {
@@ -139,6 +140,11 @@ export const downloadBlob = (data, fileName, mimeType) => {
 };
 
 
+/**
+ * Download a file from a base64 URL.
+ * @param {String} data 
+ * @param {String} fileName 
+ */
 export const downloadURL = (data, fileName) => {
 	const a = document.createElement('a');
 	a.href = data;
@@ -152,7 +158,7 @@ export const downloadURL = (data, fileName) => {
 
 /**
  * Returns the sha2 hash of a password as an array of bytes.
- * @param {*} pass 
+ * @param {String} pass 
  */
 export const getTerminator = (pass) => {
 	const nested = sha256(pass).words.map(
@@ -165,3 +171,43 @@ export const getTerminator = (pass) => {
 	);
 	return [].concat(...nested);
 };
+
+
+/**
+ * Find a smaller array into a larger array.
+ * @param {Array} data 
+ * @param {Array} values 
+ */
+export const findValues = (data, values) => {
+	const firstValue = values[0];
+	let dataIndex = 0;
+	while ((dataIndex = data.indexOf(firstValue, dataIndex)) > -1) {
+		for (let valueIndex = 0; valueIndex < values.length; valueIndex++) {
+			const value = values[valueIndex];
+			const datum = data[dataIndex + valueIndex];
+			if (value === datum) {
+				if (valueIndex === values.length - 1) {
+					return dataIndex;
+				}
+			} else {
+				break;
+			}
+		}
+		dataIndex++;
+	};
+	return -1;
+};
+
+
+export const extractMessage = async (arrayBuffer, pass) => {
+	const png = await arrayBufferToPng(arrayBuffer);
+	const data = readFromArrayLsb(png.data, png.data.length);
+	console.log('data', data);
+	const terminator = getTerminator(pass);
+	console.log('terminator', terminator);
+	const terminatorIndex = findValues(data, terminator);
+	if (terminatorIndex === -1) {
+		throw new Error('Could not extract embedded message. Please check your password.');
+	}
+	return data.slice(0, terminatorIndex);
+}

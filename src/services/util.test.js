@@ -9,7 +9,8 @@ import {
 	writeToArrayLsb, 
 	bytesToString,
 	bitsToByte,
-	readFromArrayLsb
+	readFromArrayLsb,
+	findValues
 } from './util';
 
 
@@ -134,7 +135,7 @@ test('embedMessage', async () => {
 	};
 	const file1 = pngToBuffer(png1);
 	// embed the message and the terminator
-	const file2 = await embedMessage(file1, [...message, ...terminator]);
+	const file2 = await embedMessage(file1, message, pass);
 	// decode the resulting png file
 	const png2 = await arrayBufferToPng(file2);
 	const data2 = png2.data;
@@ -151,4 +152,44 @@ test('getTerminator', () => {
 		byte => (byte).toString(16).padStart(2, '0')
 	).join('');
 	expect(result).toEqual('6fe1371a219fed273543b619860b9b44c893060438bcde681837783a5eae9c73');
+});
+
+
+test('findValues - middle', () => {
+	const data = [1, 2, 3, 4, 5];
+	const values = [3, 4];
+	const result = findValues(data, values);
+	expect(result).toEqual(2);
+});
+
+
+test('findValues - start', () => {
+	const data = [1, 2, 3, 4, 5];
+	const values = [1, 2];
+	const result = findValues(data, values);
+	expect(result).toEqual(0);
+});
+
+
+test('findValues - end', () => {
+	const data = [1, 2, 3, 4, 5];
+	const values = [4, 5];
+	const result = findValues(data, values);
+	expect(result).toEqual(3);
+});
+
+
+test('findValues - none', () => {
+	const data = [1, 2, 3, 4, 5];
+	const values = [2, 4];
+	const result = findValues(data, values);
+	expect(result).toEqual(-1);
+});
+
+
+test('findValues - just one', () => {
+	const data = [1, 2, 3, 4, 5];
+	const values = [4];
+	const result = findValues(data, values);
+	expect(result).toEqual(3);
 });
