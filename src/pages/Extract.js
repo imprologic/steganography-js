@@ -1,6 +1,7 @@
 import { FilePicker } from '../widgets';
 import { useState } from 'react';
 import { extractMessage, bytesToString } from '../services/util';
+import { decrypt } from '../services/cipher';
 
 
 const Extract = () => {
@@ -16,7 +17,7 @@ const Extract = () => {
 	const process = async () => {
 		if (content) {
 			const message = await extractMessage(content, pass);
-			const text = bytesToString(message);
+			const text = decrypt(bytesToString(message), pass);
 			setText(text);
 		}
 	};

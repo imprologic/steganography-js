@@ -1,6 +1,7 @@
 import { FilePicker } from '../widgets';
 import { useState } from 'react';
 import { stringToBytes, downloadBlob, embedMessage } from '../services/util';
+import { encrypt } from '../services/cipher';
 
 
 const Embed = () => {
@@ -16,7 +17,7 @@ const Embed = () => {
 
 	const process = async () => {
 		if (content) {
-			const message = stringToBytes(text);
+			const message = stringToBytes(encrypt(text, pass));
 			const file = await embedMessage(content, message, pass);
 			downloadBlob(file, 'test.png', 'image/png');
 		}
