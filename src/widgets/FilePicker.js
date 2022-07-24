@@ -1,3 +1,4 @@
+import Form from 'react-bootstrap/Form';
 
 
 const FilePicker = ({
@@ -19,9 +20,9 @@ const FilePicker = ({
 
 
 	return (
-		<div>
-			<input type="file" name="file" onChange={changeHandler} accept=".png" />
-		</div>
+		<>
+			<Form.Control type="file" name="file" onChange={changeHandler} accept=".png" />
+		</>
 	);
 };
 

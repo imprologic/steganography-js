@@ -47,11 +47,13 @@ const Embed = () => {
 						<FormGroup className="mt-3">
 							<Form.Label>Message</Form.Label>
 							<Form.Control as="textarea" onChange={ (e) => setText(e.target.value) } />
+							<Form.Text className="text-muted">The mesage to embed in the above file.</Form.Text>
 						</FormGroup>
 
 						<FormGroup className="mt-3">
 							<Form.Label>Passphrase</Form.Label>
 							<Form.Control type="text" onChange={ (e) => setPass(e.target.value) } />
+							<Form.Text className="text-muted">Passphrase used to encrypt the above message. Make sure to remember the passphrase, or you won't be able to recover the message.</Form.Text>
 						</FormGroup>
 
 						<Button variant="primary" type="button" onClick={process} className="mt-4">
