@@ -9,9 +9,11 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "bootstrap": "^5.2.0",
     "crypto-js": "^4.1.1",
     "pngjs": "^6.0.0",
     "react": "^18.0.0",
+    "react-bootstrap": "^2.4.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
