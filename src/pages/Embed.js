@@ -30,7 +30,7 @@ const Embed = () => {
 
 	return (
 		<>
-			<div className="m-3">
+			<div className="page-wrapper">
 				<h1 className="mb-3">Embed Text into PNG</h1>
 				<p>This page encrypts and then embeds a message into a PNG file by making imperceptible changes to some pixels.</p>
 				<p>To extract the embeded message, go to the <a href="/extract">Extract</a> page.</p>

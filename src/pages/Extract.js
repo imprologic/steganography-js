@@ -24,18 +24,20 @@ const Extract = () => {
 
 	return (
 		<>
-			<h1>Extract Text from PNG</h1>
-			<FilePicker onImageSelected={onImageSelected} />
-			<div>
-				<label>Message will be here</label>
-				<div>{text}</div>
-			</div>
-			<div>
-				<label>Passphrase</label>
-				<input type="text" onChange={ (e) => setPass(e.target.value) } />
-			</div>
-			<div>
-				<button onClick={process}>Process</button>
+			<div className="m-3">
+				<h1>Extract Text from PNG</h1>
+				<FilePicker onImageSelected={onImageSelected} />
+				<div>
+					<label>Message will be here</label>
+					<div>{text}</div>
+				</div>
+				<div>
+					<label>Passphrase</label>
+					<input type="text" onChange={ (e) => setPass(e.target.value) } />
+				</div>
+				<div>
+					<button onClick={process}>Process</button>
+				</div>
 			</div>
 		</>
 	);
