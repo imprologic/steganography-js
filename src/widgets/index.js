@@ -6,5 +6,5 @@ import FormWrapper from './FormWrapper';
 export {
 	MainMenu,
 	FilePicker,
-	FormWrapper
+	FormWrapper,
 };
