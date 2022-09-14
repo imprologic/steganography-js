@@ -1,8 +1,10 @@
 import Embed from './Embed';
+import Embed2 from './Embed2';
 import Extract from './Extract';
 
 
 export {
 	Embed,
-	Extract
+	Embed2,
+	Extract,
 };
