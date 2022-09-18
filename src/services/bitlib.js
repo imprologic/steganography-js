@@ -39,7 +39,18 @@ export const bitsToByte = (bits) => {
 /**
  * Get the least significant bit from a byte
  * @param {number} byte 
+ * @returns {number}
  */
-export const lsb = (byte) => {
+export const getLsb = (byte) => {
 	return byte & 0x01;
+}
+
+
+/**
+ * Set the least significant bit for a byte
+ * @param {number} byte 
+ * @param {number} bit
+ */
+export const setLsb = (byte, bit) => {
+	return (byte & 0xFE) | (bit && 1);
 }

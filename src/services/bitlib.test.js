@@ -1,7 +1,8 @@
 import { 
 	byteToBits, 
 	bitsToByte, 
-	lsb
+	getLsb,
+	setLsb,
 } from './bitlib';
 
 
@@ -56,15 +57,37 @@ describe('bitsToByte', () => {
 
 
 
-describe('lsb', () => {
+describe('getLsb', () => {
 
 	test('even number', () => {
-		expect(lsb(126)).toEqual(0);
+		expect(getLsb(126)).toEqual(0);
 	});
 
 	test('odd number', () => {
-		expect(lsb(127)).toEqual(1);
+		expect(getLsb(127)).toEqual(1);
 	});
+
+});
+
+
+describe('setLsb', () => {
+
+	test('flip lsb to 1', () => {
+		expect(setLsb(126, 1)).toEqual(127);
+	});
+
+	test('flip lsb to 0', () => {
+		expect(setLsb(127, 0)).toEqual(126);
+	});
+
+	test('leave lsb unchanged - even', () => {
+		expect(setLsb(126, 0)).toEqual(126);
+	});
+
+	test('leave lsb unchanged - odd', () => {
+		expect(setLsb(127, 1)).toEqual(127);
+	});
+
 
 });
 

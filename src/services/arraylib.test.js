@@ -1,4 +1,4 @@
-import { findValues } from './arraylib';
+import { findValues, getLsbWithMask } from './arraylib';
 
 
 describe('findValues', () => {
@@ -45,4 +45,40 @@ describe('findValues', () => {
 
 });
 
+
+describe('getLsbWithMask', () => {
+
+
+	test('no mask', () => {
+		const data = [0, 1, 2, 3, 4];
+		const result = getLsbWithMask(data);
+		expect(result).toEqual([0, 1, 0, 1, 0]);
+	});
+
+
+	test('even mask', () => {
+		const data = [0, 1, 2, 3, 4];
+		const mask = [1, 0];
+		const result = getLsbWithMask(data, mask);
+		expect(result).toEqual([0, 0, 0]);
+	});
+
+
+	test('odd mask', () => {
+		const data = [0, 1, 2, 3, 4];
+		const mask = [0, 1];
+		const result = getLsbWithMask(data, mask);
+		expect(result).toEqual([1, 1]);
+	});
+
+
+	test('rgba mask', () => {
+		const data = [1, 1, 1, 0, 1, 1, 1, 0];
+		const mask = [1, 1, 1, 0];
+		const result = getLsbWithMask(data, mask);
+		expect(result).toEqual([1, 1, 1, 1, 1, 1]);
+	});
+
+
+});
 

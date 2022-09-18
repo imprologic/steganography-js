@@ -1,3 +1,5 @@
+import { getLsb } from './bitlib';
+
 
 /**
  * Find a smaller array into a larger array.
@@ -11,11 +13,33 @@ export const findValues = (data, values) => {
 				break;
 			}
 			if (valueIndex === values.length - 1) {
-				// we checked the last item and it matches
+				// we checked the last value and it matches
 				return dataIndex;
 			}
 		}
 	}
 	return -1;
+};
+
+
+
+/**
+ * Get the LSB for each item in array with an optional mask.
+ * @param {number[]} data 
+ * @param {number[]} mask 
+ */
+export const getLsbWithMask = (data, mask) => {
+	const result = [];
+	const hasMask = mask && mask.length;
+	for (let dataIndex = 0; dataIndex < data.length; dataIndex++) {
+		if (hasMask) {
+			const maskIndex = dataIndex % mask.length;
+			if (!mask[maskIndex]) {
+				continue;
+			}
+		}
+		result.push(getLsb(data[dataIndex]));
+	}
+	return result;
 };
 
