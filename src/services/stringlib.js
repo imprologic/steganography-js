@@ -11,13 +11,22 @@ export const stringToBytes = (text) => {
 };
 
 
+/**
+ * Convert an array of bytes to a string
+ * @param {number[]} bytes The array of bytes to convert
+ * @returns {string} An string representing the UTF-8 decoding of the byte array
+ */
 export const bytesToString = (bytes) => {
 	const utf8EDecoder = new TextDecoder();
 	return utf8EDecoder.decode(new Uint8Array(bytes));
 };
 
 
-
+/**
+ * Convert a string to a bit array
+ * @param {string} text The text to convert
+ * @returns {number[]} An array of bits
+ */
 export const stringToBits = (text) => {
 	const nested = stringToBytes(text).map(byteToBits);
 	return [].concat(...nested);
