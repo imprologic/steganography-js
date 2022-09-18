@@ -1,6 +1,13 @@
 import { PNG } from 'pngjs/browser';
 import sha256 from 'crypto-js/sha256';
 
+import { 
+	byteToBits, 
+	bitsToByte 
+} from './bitlib';
+
+
+
 export const arrayBufferToPng = (arrayBuffer) => {
 	const png = new PNG({ filterType: 4 });
 	return new Promise(
@@ -17,54 +24,6 @@ export const arrayBufferToPng = (arrayBuffer) => {
 export const pngToBuffer = (png) => {
 	return PNG.sync.write(png);
 }
-
-
-export const stringToBytes = (text) => {
-	const utf8Encode = new TextEncoder();
-	return Array.from(utf8Encode.encode(text));
-};
-
-
-export const bytesToString = (bytes) => {
-	const utf8EDecoder = new TextDecoder();
-	return utf8EDecoder.decode(new Uint8Array(bytes));
-};
-
-
-export const byteToBits = (byte) => {
-	return [
-		(byte >>> 7) & 1,
-		(byte >>> 6) & 1,
-		(byte >>> 5) & 1,
-		(byte >>> 4) & 1,
-		(byte >>> 3) & 1,
-		(byte >>> 2) & 1,
-		(byte >>> 1) & 1,
-		byte & 1,
-	];
-};
-
-
-/**
- * Converts an array of 8 bits to a byte.
- */
-export const bitsToByte = (bits) => {
-	return (bits[0] << 7) |
-		(bits[1] << 6) |
-		(bits[2] << 5) |
-		(bits[3] << 4) |
-		(bits[4] << 3) |
-		(bits[5] << 2) |
-		(bits[6] << 1) |
-		bits[7]
-		;
-};
-
-
-export const stringToBits = (text) => {
-	const nested = stringToBytes(text).map(byteToBits);
-	return [].concat(...nested);
-};
 
 
 

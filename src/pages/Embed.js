@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { stringToBytes, downloadBlob, embedMessage } from '../services/util';
+import { stringToBytes } from '../services/stringlib';
+import { downloadBlob, embedMessage } from '../services/util';
 import { encrypt } from '../services/cipher';
 
 
