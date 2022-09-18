@@ -34,3 +34,12 @@ export const bitsToByte = (bits) => {
 		bits[7]
 		;
 };
+
+
+/**
+ * Get the least significant bit from a byte
+ * @param {number} byte 
+ */
+export const lsb = (byte) => {
+	return byte & 0x01;
+}

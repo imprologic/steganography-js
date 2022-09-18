@@ -6,6 +6,8 @@ import {
 	bitsToByte 
 } from './bitlib';
 
+import { findValues } from './arraylib';
+
 
 
 export const arrayBufferToPng = (arrayBuffer) => {
@@ -131,31 +133,6 @@ export const getTerminator = (pass) => {
 	return [].concat(...nested);
 };
 
-
-/**
- * Find a smaller array into a larger array.
- * @param {Array} data 
- * @param {Array} values 
- */
-export const findValues = (data, values) => {
-	const firstValue = values[0];
-	let dataIndex = 0;
-	while ((dataIndex = data.indexOf(firstValue, dataIndex)) > -1) {
-		for (let valueIndex = 0; valueIndex < values.length; valueIndex++) {
-			const value = values[valueIndex];
-			const datum = data[dataIndex + valueIndex];
-			if (value === datum) {
-				if (valueIndex === values.length - 1) {
-					return dataIndex;
-				}
-			} else {
-				break;
-			}
-		}
-		dataIndex++;
-	};
-	return -1;
-};
 
 
 export const extractMessage = async (arrayBuffer, pass) => {

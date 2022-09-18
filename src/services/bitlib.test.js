@@ -1,6 +1,7 @@
 import { 
 	byteToBits, 
-	bitsToByte 
+	bitsToByte, 
+	lsb
 } from './bitlib';
 
 
@@ -49,6 +50,20 @@ describe('bitsToByte', () => {
 		const bits = byteToBits(byte);
 		const result = bitsToByte(bits);
 		expect(result).toEqual(byte);
+	});
+
+});
+
+
+
+describe('lsb', () => {
+
+	test('even number', () => {
+		expect(lsb(126)).toEqual(0);
+	});
+
+	test('odd number', () => {
+		expect(lsb(127)).toEqual(1);
 	});
 
 });
