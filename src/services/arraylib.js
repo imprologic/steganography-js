@@ -58,12 +58,15 @@ export const setLsbWithMask = (data, startIndex, bits, mask) => {
 	let bitIndex = 0;
 	for (let dataIndex = startIndex; dataIndex < data.length; dataIndex++) {
 		if (hasMask) {
-			const maskIndex = dataIndex % mask.length;
+			const maskIndex = (dataIndex - startIndex) % mask.length;
 			if (!mask[maskIndex]) {
 				continue;
 			}
 		}
 		data[dataIndex] = setLsb(data[dataIndex], bits[bitIndex]);
 		bitIndex++;
+		if (bitIndex >= bits.length) {
+			return;
+		}
 	}
 };
