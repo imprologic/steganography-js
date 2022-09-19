@@ -1,4 +1,4 @@
-import { getLsb } from './bitlib';
+import { getLsb, setLsb } from './bitlib';
 
 
 /**
@@ -25,8 +25,9 @@ export const findValues = (data, values) => {
 
 /**
  * Get the LSB for each item in array with an optional mask.
- * @param {number[]} data 
- * @param {number[]} mask 
+ * @param {number[]} data Array of bytes
+ * @param {number[]} mask Optional array of truthy and falsy items
+ * @returns {number[]} Array of bits
  */
 export const getLsbWithMask = (data, mask) => {
 	const result = [];
@@ -43,3 +44,26 @@ export const getLsbWithMask = (data, mask) => {
 	return result;
 };
 
+
+
+/**
+ * Set the LSB in an array starting from a specific index
+ * @param {number[]} data Array-like object containing the data to be changed
+ * @param {number} startIndex The data index where the changes start
+ * @param {number[]} bits Array of LSB to be set on the data array
+ * @param {number[]} mask Optional
+ */
+export const setLsbWithMask = (data, startIndex, bits, mask) => {
+	const hasMask = mask && mask.length;
+	let bitIndex = 0;
+	for (let dataIndex = startIndex; dataIndex < data.length; dataIndex++) {
+		if (hasMask) {
+			const maskIndex = dataIndex % mask.length;
+			if (!mask[maskIndex]) {
+				continue;
+			}
+		}
+		data[dataIndex] = setLsb(data[dataIndex], bits[bitIndex]);
+		bitIndex++;
+	}
+};

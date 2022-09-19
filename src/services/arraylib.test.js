@@ -1,4 +1,4 @@
-import { findValues, getLsbWithMask } from './arraylib';
+import { findValues, getLsbWithMask, setLsbWithMask } from './arraylib';
 
 
 describe('findValues', () => {
@@ -46,6 +46,7 @@ describe('findValues', () => {
 });
 
 
+
 describe('getLsbWithMask', () => {
 
 
@@ -82,3 +83,26 @@ describe('getLsbWithMask', () => {
 
 });
 
+
+
+describe('setLsbWithMask', () => {
+
+	test('no index, no mask', () => {
+		const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		const startIndex = 0;
+		const bits = [0, 1, 0, 1, 0, 0, 1, 1, 0];
+		setLsbWithMask(data, startIndex, bits);
+		expect(data).toEqual([0, 3, 2, 5, 4, 6, 7, 9, 8]);
+	});
+
+
+	test('index, no mask', () => {
+		const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+		const startIndex = 2;
+		const bits = [0, 1, 0, 1, 0, 0, 1];
+		setLsbWithMask(data, startIndex, bits);
+		expect(data).toEqual([1, 2, 2, 5, 4, 7, 6, 8, 9]);
+	});
+
+
+});

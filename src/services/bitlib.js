@@ -50,6 +50,7 @@ export const getLsb = (byte) => {
  * Set the least significant bit for a byte
  * @param {number} byte 
  * @param {number} bit
+ * @returns {number}
  */
 export const setLsb = (byte, bit) => {
 	return (byte & 0xFE) | (bit && 1);
