@@ -7,10 +7,11 @@ import {
 	pngToBuffer, 
 	embedMessage, 
 	arrayBufferToPng, 
-	getTerminator, 
 	writeToArrayLsb, 
 	readFromArrayLsb
 } from './util';
+
+import { getHash } from './cipher';
 
 
 
@@ -50,7 +51,7 @@ test('embedMessage', async () => {
 	const text = 'Who is John Galt?';
 	const message = stringToBytes(text);
 	const pass = '4tlasShrugg3d';
-	const terminator = getTerminator(pass);
+	const terminator = getHash(pass);
 	const pixelsNeeded = (message.length + terminator.length) * 8 / 4;
 	const imageSize = Math.ceil(Math.sqrt(pixelsNeeded));
 	// generate a small PNG using a Fibonacci series
@@ -79,13 +80,5 @@ test('embedMessage', async () => {
 	expect(content.slice(message.length)).toEqual(terminator);
 });
 
-
-test('getTerminator', () => {
-	const pass = 'Ragnar Danneskjöld';
-	const result = getTerminator(pass).map(
-		byte => (byte).toString(16).padStart(2, '0')
-	).join('');
-	expect(result).toEqual('6fe1371a219fed273543b619860b9b44c893060438bcde681837783a5eae9c73');
-});
 
 

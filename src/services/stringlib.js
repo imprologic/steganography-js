@@ -1,4 +1,4 @@
-import { byteToBits, bytesToBits } from './bitlib';
+import { bytesToBits } from './bitlib';
 
 /**
  * Convert a string to an array of bytes

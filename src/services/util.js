@@ -1,5 +1,5 @@
 import { PNG } from 'pngjs/browser';
-import sha256 from 'crypto-js/sha256';
+import { getHash } from './cipher';
 
 import { 
 	byteToBits, 
@@ -82,7 +82,7 @@ export const embedMessage = async (arrayBuffer, message, pass) => {
 	// write the data and return the index
 	const terminatorIndex = writeToArrayLsb(data, message, 0);
 	// write the terminator
-	const terminator = getTerminator(pass);
+	const terminator = getHash(pass);
 	writeToArrayLsb(data, terminator, terminatorIndex);
 	// return a PNG buffer
 	return pngToBuffer(png);
@@ -117,21 +117,6 @@ export const downloadURL = (data, fileName) => {
 };
 
 
-/**
- * Returns the sha2 hash of a password as an array of bytes.
- * @param {String} pass 
- */
-export const getTerminator = (pass) => {
-	const nested = sha256(pass).words.map(
-		word => [
-			word >>> 24,
-			(word >>> 16) & 0xff,
-			(word >>> 8) & 0xff,
-			word & 0xff,
-		]
-	);
-	return [].concat(...nested);
-};
 
 
 
@@ -139,7 +124,7 @@ export const extractMessage = async (arrayBuffer, pass) => {
 	const png = await arrayBufferToPng(arrayBuffer);
 	const data = readFromArrayLsb(png.data, png.data.length);
 	console.log('data', data);
-	const terminator = getTerminator(pass);
+	const terminator = getHash(pass);
 	console.log('terminator', terminator);
 	const terminatorIndex = findValues(data, terminator);
 	if (terminatorIndex === -1) {
