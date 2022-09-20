@@ -1,4 +1,4 @@
-import { byteToBits } from './bitlib';
+import { byteToBits, bytesToBits } from './bitlib';
 
 /**
  * Convert a string to an array of bytes
@@ -28,6 +28,5 @@ export const bytesToString = (bytes) => {
  * @returns {number[]} An array of bits
  */
 export const stringToBits = (text) => {
-	const nested = stringToBytes(text).map(byteToBits);
-	return [].concat(...nested);
+	return bytesToBits(stringToBytes(text));
 };

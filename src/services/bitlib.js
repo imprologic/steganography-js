@@ -1,5 +1,5 @@
 /**
- * Converts a byte to an array of bits (either 0 or 1).
+ * Converts a byte to an array of bits (zeros and ones).
  * The caller should ensure the `byte` argument is between 0 and 255.
  * @param {number} byte 
  * @returns {number[]} An array of zeros and ones.
@@ -15,6 +15,17 @@ export const byteToBits = (byte) => {
 		(byte >>> 1) & 1,
 		byte & 1,
 	];
+};
+
+
+/**
+ * Converts a byte array to a bit array (either 0 or 1).
+ * The caller should ensure the `byte` argument is between 0 and 255.
+ * @param {number[]} bytes
+ * @returns {number[]} An array of zeros and ones.
+ */
+export const bytesToBits = (bytes) => {
+	return [].concat(...bytes.map(byteToBits));
 };
 
 

@@ -3,6 +3,7 @@ import {
 	bitsToByte, 
 	getLsb,
 	setLsb,
+	bytesToBits,
 } from './bitlib';
 
 
@@ -34,6 +35,18 @@ describe('byteToBits', () => {
 
 });
 
+
+describe('bytesToBits', () => {
+	const bytes = [1, 2, 3, 254, 255];
+	const result = bytesToBits(bytes);
+	expect(result).toEqual([
+		0,0,0,0,0,0,0,1,
+		0,0,0,0,0,0,1,0,
+		0,0,0,0,0,0,1,1,
+		1,1,1,1,1,1,1,0,
+		1,1,1,1,1,1,1,1,
+	]);
+});
 
 
 describe('bitsToByte', () => {
