@@ -2,8 +2,10 @@ import { AES, enc } from 'crypto-js';
 import sha256 from 'crypto-js/sha256';
 
 /**
- * Returns the sha2 hash of a password as an array of bytes.
- * @param {String} text 
+ * Return the sha2 hash of a text as an array of bytes.
+ * Online tool: https://emn178.github.io/online-tools/sha256.html
+ * @param {string} text Text to hash
+ * @returns {number[]} Array of bytes representing the hash
  */
 export const getHash = (text) => {
 	const nested = sha256(text).words.map(
@@ -20,18 +22,18 @@ export const getHash = (text) => {
 
 /**
  * Encrypt a message using AES.
- * @param {String} message 
- * @param {String} key 
- * @returns {String}
+ * @param {string} message 
+ * @param {string} key 
+ * @returns {string}
  */
 export const encrypt = (message, key) => AES.encrypt(JSON.stringify(message), key).toString();
 
 
 /**
  * Decript a ciphertext.
- * @param {String} ciphertext 
- * @param {String} key 
- * @returns {String}
+ * @param {string} ciphertext 
+ * @param {string} key 
+ * @returns {string}
  */
 export const decrypt = (ciphertext, key) => {
 	const bytes = AES.decrypt(ciphertext, key);

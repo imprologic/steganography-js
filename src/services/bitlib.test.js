@@ -4,6 +4,7 @@ import {
 	getLsb,
 	setLsb,
 	bytesToBits,
+	bitsToBytes,
 } from './bitlib';
 
 
@@ -68,6 +69,21 @@ describe('bitsToByte', () => {
 
 });
 
+
+
+describe('bitsToBytes', () => {
+
+	test('0 to 255', () => {
+		const bytes = Array.from(
+			{ length: 255 },
+			(_, index) => index
+		);
+		const bits = bytesToBits(bytes);
+		const result = bitsToBytes(bits);
+		expect(result).toEqual(bytes);
+	});
+
+});
 
 
 describe('getLsb', () => {

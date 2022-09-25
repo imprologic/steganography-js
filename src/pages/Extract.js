@@ -4,7 +4,7 @@ import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import { bytesToString } from '../services/stringlib';
-import { extractMessage } from '../services/util';
+import { extractMessage } from '../services/pngutil';
 import { decrypt } from '../services/cipher';
 
 

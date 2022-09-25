@@ -48,6 +48,23 @@ export const bitsToByte = (bits) => {
 
 
 /**
+ * 
+ * @param {number[]} bits 
+ * @returns {number[]} bytes
+ */
+export const bitsToBytes = (bits) => {
+	if (bits.length % 8 !== 0) {
+		throw new Error('The number if bits should be a multiple of 8');
+	}
+	const result = [];
+	for (let index = 0; index < bits.length; index += 8) {
+		result.push(bitsToByte(bits.slice(index, index + 8)));
+	}
+	return result;
+};
+
+
+/**
  * Get the least significant bit from a byte
  * @param {number} byte 
  * @returns {number}

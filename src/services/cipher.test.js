@@ -5,11 +5,21 @@ import {
 } from './cipher';
 
 
-test('getHash', () => {
-	const pass = 'Ragnar Danneskjöld';
-	const result = getHash(pass).map(
+/**
+ * Convert a byte array to its hex string representation 
+ * @param {number[]} bytes 
+ * @returns {string}
+ */
+export const bytesToHexString = (bytes) => {
+	return bytes.map(
 		byte => (byte).toString(16).padStart(2, '0')
 	).join('');
+};
+
+
+test('getHash', () => {
+	const pass = 'Ragnar Danneskjöld';
+	const result = bytesToHexString(getHash(pass));
 	expect(result).toEqual('6fe1371a219fed273543b619860b9b44c893060438bcde681837783a5eae9c73');
 });
 

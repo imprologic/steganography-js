@@ -4,7 +4,7 @@ import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import { stringToBytes } from '../services/stringlib';
-import { downloadBlob, embedMessage } from '../services/util';
+import { downloadBlob, embedMessage } from '../services/pngutil';
 import { encrypt } from '../services/cipher';
 
 

@@ -1,15 +1,20 @@
 import { PNG } from 'pngjs/browser';
-import { getHash } from './cipher';
+import { getHash, encrypt } from './cipher';
 
 import { 
-	byteToBits, 
-	bitsToByte 
+	bitsToByte, 
+	bytesToBits
 } from './bitlib';
 
-import { findValues } from './arraylib';
+import { findValues, setLsbWithMask } from './arraylib';
+import { stringToBytes } from './stringlib';
 
 
-
+/**
+ * Convert an array buffer (as received from a file upload) to a PNG structure
+ * @param {ArrayBuffer} arrayBuffer 
+ * @returns {Promise<PNG>}
+ */
 export const arrayBufferToPng = (arrayBuffer) => {
 	const png = new PNG({ filterType: 4 });
 	return new Promise(
@@ -23,23 +28,64 @@ export const arrayBufferToPng = (arrayBuffer) => {
 };
 
 
+/**
+ * Writes a PNG structure to an ArrayBuffer
+ * @param {PNG} png 
+ * @returns {ArrayBuffer}
+ */
 export const pngToBuffer = (png) => {
 	return PNG.sync.write(png);
 }
 
 
+/**
+ * Return the hash of the password
+ * @param {string} password 
+ * @returns {number[]}
+ */
+export const getPrefix = (password) => {
+	return getHash(password);
+}
 
-export const writeToArrayLsb = (data, message, startIndex) => {
-	let index = startIndex;
-	// write the actual message
-	for (const byte of message) {
-		const bits = byteToBits(byte);
-		for (const bit of bits) {
-			data[index] = (data[index] & 0xFE) | bit;
-			index++;
-		}
-	}
-	return index;
+
+/**
+ * Return the hash of the reveersed password
+ * @param {string} password 
+ * @returns {number[]}
+ */
+export const getSuffix = (password) => {
+	return getHash(password.split('').reverse().join(''));
+}
+
+
+/**
+ * Wrap the encrypted message with a prefix and a suffix and return as a byte array
+ * @param {string} message 
+ * @param {string} password 
+ * @returns {number[]}
+ */
+export const getWrappedBytes = (text, password) => {
+	const prefix = getPrefix(password);
+	const suffix = getSuffix(password);
+	return [].concat(
+		prefix,
+		stringToBytes(encrypt(text, password)),
+		suffix,
+	);
+}
+
+
+/**
+ * 
+ * @param {*} pngData 
+ * @param {*} text 
+ * @param {*} password 
+ */
+export const writeToPngData = (pngData, text, password) => {
+	const startIndex = 0; // TODO: Get a random value or the index of an aria with high color variance.
+	const wrappedBytes = getWrappedBytes(text, password);
+	const bits = bytesToBits(wrappedBytes);
+	setLsbWithMask(pngData, startIndex, bits, [1, 1, 1, 0]);
 };
 
 
@@ -80,10 +126,10 @@ export const embedMessage = async (arrayBuffer, message, pass) => {
 	const png = await arrayBufferToPng(arrayBuffer);
 	const data = png.data;
 	// write the data and return the index
-	const terminatorIndex = writeToArrayLsb(data, message, 0);
+	const terminatorIndex = writeToPngData(data, message, 0);
 	// write the terminator
 	const terminator = getHash(pass);
-	writeToArrayLsb(data, terminator, terminatorIndex);
+	writeToPngData(data, terminator, terminatorIndex);
 	// return a PNG buffer
 	return pngToBuffer(png);
 }
