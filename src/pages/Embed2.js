@@ -4,7 +4,7 @@ import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import { stringToBytes } from '../services/stringlib';
-import { downloadBlob, embedMessage } from '../services/pngutil';
+import { downloadBlob, embedText } from '../services/pngutil';
 import { encrypt } from '../services/cipher';
 
 
@@ -22,7 +22,7 @@ const Embed2 = () => {
 	const process = async () => {
 		if (content) {
 			const message = stringToBytes(encrypt(text, pass));
-			const file = await embedMessage(content, message, pass);
+			const file = await embedText(content, message, pass);
 			downloadBlob(file, 'test.png', 'image/png');
 		}
 	};

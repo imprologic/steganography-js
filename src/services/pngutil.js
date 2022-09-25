@@ -1,13 +1,13 @@
 import { PNG } from 'pngjs/browser';
-import { getHash, encrypt } from './cipher';
+import { getHash, encrypt, decrypt } from './cipher';
 
 import { 
-	bitsToByte, 
-	bytesToBits
+	bytesToBits,
+	bitsToBytes
 } from './bitlib';
 
-import { findValues, setLsbWithMask } from './arraylib';
-import { stringToBytes } from './stringlib';
+import { findValues, setLsbWithMask, getLsbWithMask } from './arraylib';
+import { stringToBytes, bytesToString } from './stringlib';
 
 
 /**
@@ -76,10 +76,11 @@ export const getWrappedBytes = (text, password) => {
 
 
 /**
- * 
- * @param {*} pngData 
- * @param {*} text 
- * @param {*} password 
+ * Write an encrypted text with prefix and suffix to the LSBs of a PNG data array.
+ * Skips the transparency bytes.
+ * @param {Uint8Array} pngData 
+ * @param {string} text 
+ * @param {string} password 
  */
 export const writeToPngData = (pngData, text, password) => {
 	const startIndex = 0; // TODO: Get a random value or the index of an aria with high color variance.
@@ -90,49 +91,55 @@ export const writeToPngData = (pngData, text, password) => {
 
 
 /**
- * Reads the embedded content from an array.
- * @param {*} data The array providing the content.
- * @param {*} endIndex The content's length. Must be a multiple of 8.
+ * Read an encrypted text with prefix and suffix from the LSBs of a PNG data array.
+ * Skips the transparency bytes.
+ * @param {Uint8Array} pngData 
+ * @param {string} password 
  */
-export const readFromArrayLsb = (data, endIndex) => {
-	if (endIndex % 8 !== 0) {
-		throw new Error(`readFromArrayLsb: Argument endIndex should be a multiple of 8. Received ${endIndex}`);
-	}
-	const bytes = [];
-	let bits = [];
-	for (let index = 0; index < endIndex; index++) {
-		const lsb = data[index] & 0x01;
-		bits.push(lsb);
-		if (bits.length === 8) {
-			bytes.push(bitsToByte(bits));
-			bits = [];
-		}
-	}
-	if (bits.length > 0) {
-		bytes.push(bitsToByte(bits));
-	}
-	return bytes;
+export const readPromPngData = (pngData, password) => {
+	const bits = getLsbWithMask(pngData, [1, 1, 1, 0]);
+	// find the prefix
+	const prefix = bytesToBits(getPrefix(password));
+	const prefixIndex = findValues(bits, prefix);
+	expect(prefixIndex).toBeGreaterThan(-1);
+	// find the suffix
+	const suffix = bytesToBits(getSuffix(password));
+	const suffixIndex = findValues(bits, suffix);
+	expect(suffixIndex).toBeGreaterThan(0);
+	// extract the cipher
+	const cipherStart = prefixIndex + prefix.length;
+	const cipherEnd = suffixIndex;
+	const cipherBits = bits.slice(cipherStart, cipherEnd);
+	const cipher = bytesToString(bitsToBytes(cipherBits));
+	return decrypt(cipher, password);
 };
 
 
 /**
  * Takes an array buffer, decodes it as PNG, embeds the text and then encodes the array buffer back to PNG.
- * @param {*} arrayBuffer Image bytes in PNG format
- * @param {*} text Byte array
- * @param {*} pass String
+ * @param {ArrayBuffer} arrayBuffer Image bytes in PNG format
+ * @param {string} text Byte array
+ * @param {string} password String
  * TODO: Make sure the message + terminator does not overflow the PNG buffer
  */
-export const embedMessage = async (arrayBuffer, message, pass) => {
+export const embedText = async (arrayBuffer, text, password) => {
 	const png = await arrayBufferToPng(arrayBuffer);
-	const data = png.data;
-	// write the data and return the index
-	const terminatorIndex = writeToPngData(data, message, 0);
-	// write the terminator
-	const terminator = getHash(pass);
-	writeToPngData(data, terminator, terminatorIndex);
-	// return a PNG buffer
-	return pngToBuffer(png);
+	writeToPngData(png.data, text, password);
+	return png;
 }
+
+
+
+/**
+ * 
+ * @param {ArrayBuffer} arrayBuffer 
+ * @param {string} password 
+ */
+export const extractText = async (arrayBuffer, password) => {
+	const png = await arrayBufferToPng(arrayBuffer);
+	return readPromPngData(png.data, password);
+}
+
 
 
 export const downloadBlob = (data, fileName, mimeType) => {
@@ -145,6 +152,7 @@ export const downloadBlob = (data, fileName, mimeType) => {
 		return window.URL.revokeObjectURL(url);
 	}, 1000);
 };
+
 
 
 /**
@@ -161,20 +169,3 @@ export const downloadURL = (data, fileName) => {
 	a.click();
 	a.remove();
 };
-
-
-
-
-
-export const extractMessage = async (arrayBuffer, pass) => {
-	const png = await arrayBufferToPng(arrayBuffer);
-	const data = readFromArrayLsb(png.data, png.data.length);
-	console.log('data', data);
-	const terminator = getHash(pass);
-	console.log('terminator', terminator);
-	const terminatorIndex = findValues(data, terminator);
-	if (terminatorIndex === -1) {
-		throw new Error('Could not extract embedded message. Please check your password.');
-	}
-	return data.slice(0, terminatorIndex);
-}

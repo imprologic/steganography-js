@@ -4,7 +4,7 @@ import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
 import { bytesToString } from '../services/stringlib';
-import { extractMessage } from '../services/pngutil';
+import { extractText } from '../services/pngutil';
 import { decrypt } from '../services/cipher';
 
 
@@ -20,7 +20,7 @@ const Extract = () => {
 
 	const process = async () => {
 		if (content) {
-			const message = await extractMessage(content, pass);
+			const message = await extractText(content, pass);
 			const text = decrypt(bytesToString(message), pass);
 			setText(text);
 			console.log(text);
