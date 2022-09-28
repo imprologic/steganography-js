@@ -1,5 +1,5 @@
 import {
-	getPrefix, getSuffix, getWrappedBytes, writeToPngData, pngToBuffer, arrayBufferToPng
+	getPrefix, getSuffix, getWrappedBytes, writeToPngData, pngToBuffer, arrayBufferToPng, embedText, extractText
 } from './pngutil';
 
 import {
@@ -107,5 +107,18 @@ test('writeToPngData', () => {
 });
 
 
-
+test('Embed & extract', async () => {
+	const text = 'Who is John Galt?';
+	const password = 'Invent0r';
+	const wrappedBytes = getWrappedBytes(text, password);
+	const pixelsNeeded = Math.ceil(wrappedBytes.length * 8 / 3);
+	const width = Math.ceil(Math.sqrt(pixelsNeeded));
+	const height = Math.ceil(pixelsNeeded / width);
+	const png = makePng(width, height);
+	const buffer = pngToBuffer(png);
+	const pngWithText = await embedText(buffer, text, password);
+	const bufferWithText = pngToBuffer(pngWithText);
+	const extractedText = await extractText(bufferWithText, password);
+	expect(extractedText).toEqual(text);
+});
 
