@@ -120,6 +120,7 @@ export const readPromPngData = (pngData, password) => {
  * @param {ArrayBuffer} arrayBuffer Image bytes in PNG format
  * @param {string} text Byte array
  * @param {string} password String
+ * @returns {Promise<PNG>}
  * TODO: Make sure the message + terminator does not overflow the PNG buffer
  */
 export const embedText = async (arrayBuffer, text, password) => {
@@ -131,9 +132,10 @@ export const embedText = async (arrayBuffer, text, password) => {
 
 
 /**
- * 
+ * Extract a text from an array buffer representing a compressed PNG file
  * @param {ArrayBuffer} arrayBuffer 
  * @param {string} password 
+ * @returns {Promise<string>}
  */
 export const extractText = async (arrayBuffer, password) => {
 	const png = await arrayBufferToPng(arrayBuffer);
@@ -157,8 +159,8 @@ export const downloadBlob = (data, fileName, mimeType) => {
 
 /**
  * Download a file from a base64 URL.
- * @param {String} data 
- * @param {String} fileName 
+ * @param {string} data 
+ * @param {string} fileName 
  */
 export const downloadURL = (data, fileName) => {
 	const a = document.createElement('a');
