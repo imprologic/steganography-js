@@ -40,6 +40,7 @@ export const pngToBuffer = (png) => {
 
 /**
  * Return the hash of the password
+ * Online tool: https://emn178.github.io/online-tools/sha256.html
  * @param {string} password 
  * @returns {number[]}
  */
@@ -49,7 +50,10 @@ export const getPrefix = (password) => {
 
 
 /**
- * Return the hash of the reveersed password
+ * Return the hash of the reversed password
+ * Online tools:
+ * - https://codebeautify.org/reverse-string
+ * - https://emn178.github.io/online-tools/sha256.html
  * @param {string} password 
  * @returns {number[]}
  */
@@ -83,9 +87,23 @@ export const getWrappedBytes = (text, password) => {
  * @param {string} password 
  */
 export const writeToPngData = (pngData, text, password) => {
-	const startIndex = 0; // TODO: Get a random value or the index of an aria with high color variance.
 	const wrappedBytes = getWrappedBytes(text, password);
 	const bits = bytesToBits(wrappedBytes);
+	const bitCount = bits.length;
+	console.log('bitCount:', bitCount);
+	const neededPixels = Math.ceil(bitCount / 3);
+	console.log('neededPixels:', neededPixels);
+	const actualPixels = pngData.length / 4;
+	console.log('actualPixels:', actualPixels);
+	if (neededPixels > actualPixels) {
+		throw new Error(`PNG should have at least ${neededPixels} pixels, the actual pixel count is ${actualPixels}.`);
+	}
+	// TODO: Get the index of an aria with high color variance.
+	// TODO: Move this to a separate function to make it testable
+	const startPixel = Math.round((actualPixels - neededPixels) * Math.random()); 
+	console.log('startPixel:', startPixel);
+	const startIndex = startPixel * 4;
+	console.log('startIndex:', startIndex);
 	setLsbWithMask(pngData, startIndex, bits, [1, 1, 1, 0]);
 };
 
@@ -96,16 +114,22 @@ export const writeToPngData = (pngData, text, password) => {
  * @param {Uint8Array} pngData 
  * @param {string} password 
  */
-export const readPromPngData = (pngData, password) => {
+export const readFromPngData = (pngData, password) => {
 	const bits = getLsbWithMask(pngData, [1, 1, 1, 0]);
 	// find the prefix
 	const prefix = bytesToBits(getPrefix(password));
 	const prefixIndex = findValues(bits, prefix);
-	expect(prefixIndex).toBeGreaterThan(-1);
+	console.log('prefixIndex:', prefixIndex);
+	if (prefixIndex === -1) {
+		throw new Error('Prefix not found');
+	}
 	// find the suffix
 	const suffix = bytesToBits(getSuffix(password));
 	const suffixIndex = findValues(bits, suffix);
-	expect(suffixIndex).toBeGreaterThan(0);
+	console.log('suffixIndex:', suffixIndex);
+	if (suffixIndex <= 0) {
+		throw new Error('Suffix not found');
+	}
 	// extract the cipher
 	const cipherStart = prefixIndex + prefix.length;
 	const cipherEnd = suffixIndex;
@@ -120,13 +144,13 @@ export const readPromPngData = (pngData, password) => {
  * @param {ArrayBuffer} arrayBuffer Image bytes in PNG format
  * @param {string} text Byte array
  * @param {string} password String
- * @returns {Promise<PNG>}
+ * @returns {Promise<Buffer>} Buffer containing the compressed PNG.
  * TODO: Make sure the message + terminator does not overflow the PNG buffer
  */
 export const embedText = async (arrayBuffer, text, password) => {
 	const png = await arrayBufferToPng(arrayBuffer);
 	writeToPngData(png.data, text, password);
-	return png;
+	return pngToBuffer(png);
 }
 
 
@@ -139,13 +163,18 @@ export const embedText = async (arrayBuffer, text, password) => {
  */
 export const extractText = async (arrayBuffer, password) => {
 	const png = await arrayBufferToPng(arrayBuffer);
-	return readPromPngData(png.data, password);
+	return readFromPngData(png.data, password);
 }
 
 
-
-export const downloadBlob = (data, fileName, mimeType) => {
-	const blob = new Blob([data], {
+/**
+ * Download a file by creating a Blob and injecting it in an object URL
+ * @param {Buffer} buffer The buffer containing the file data
+ * @param {*} fileName The name of the file to download
+ * @param {*} mimeType The content type of the file to download
+ */
+export const downloadBlob = (buffer, fileName, mimeType) => {
+	const blob = new Blob([buffer], {
 		type: mimeType
 	});
 	const url = window.URL.createObjectURL(blob);

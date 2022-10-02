@@ -1,5 +1,12 @@
 import {
-	getPrefix, getSuffix, getWrappedBytes, writeToPngData, pngToBuffer, arrayBufferToPng, embedText, extractText
+	getPrefix, 
+	getSuffix, 
+	getWrappedBytes, 
+	writeToPngData, 
+	pngToBuffer, 
+	arrayBufferToPng, 
+	embedText, 
+	extractText
 } from './pngutil';
 
 import {
@@ -116,8 +123,7 @@ test('Embed & extract', async () => {
 	const height = Math.ceil(pixelsNeeded / width);
 	const png = makePng(width, height);
 	const buffer = pngToBuffer(png);
-	const pngWithText = await embedText(buffer, text, password);
-	const bufferWithText = pngToBuffer(pngWithText);
+	const bufferWithText = await embedText(buffer, text, password);
 	const extractedText = await extractText(bufferWithText, password);
 	expect(extractedText).toEqual(text);
 });

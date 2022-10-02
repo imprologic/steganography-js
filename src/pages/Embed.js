@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { stringToBytes } from '../services/stringlib';
 import { downloadBlob, embedText } from '../services/pngutil';
-import { encrypt } from '../services/cipher';
 
 
 const Embed = () => {
@@ -21,8 +19,7 @@ const Embed = () => {
 
 	const process = async () => {
 		if (content) {
-			const message = stringToBytes(encrypt(text, pass));
-			const file = await embedText(content, message, pass);
+			const file = await embedText(content, text, pass);
 			downloadBlob(file, 'test.png', 'image/png');
 		}
 	};

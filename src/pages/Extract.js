@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { bytesToString } from '../services/stringlib';
 import { extractText } from '../services/pngutil';
-import { decrypt } from '../services/cipher';
 
 
 const Extract = () => {
@@ -20,10 +18,8 @@ const Extract = () => {
 
 	const process = async () => {
 		if (content) {
-			const message = await extractText(content, pass);
-			const text = decrypt(bytesToString(message), pass);
+			const text = await extractText(content, pass);
 			setText(text);
-			console.log(text);
 		}
 	};
 
