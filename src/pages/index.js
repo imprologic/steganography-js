@@ -1,8 +1,10 @@
-import Embed from './Embed';
-import Extract from './Extract';
+import Home from './Home';
+import PngEmbed from './png/Embed';
+import PngExtract from './png/Extract';
 
 
 export {
-	Embed,
-	Extract,
+	Home,
+	PngEmbed,
+	PngExtract,
 };

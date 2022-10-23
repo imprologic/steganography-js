@@ -1,9 +1,9 @@
-import { FilePicker, FormWrapper } from '../widgets';
+import { FilePicker, FormWrapper } from '../../widgets';
 import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { extractText } from '../services/pngutil';
+import { extractText } from '../../services/pngutil';
 
 
 const Extract = () => {

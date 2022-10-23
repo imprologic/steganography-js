@@ -1,9 +1,10 @@
-import { FilePicker, FormWrapper } from '../widgets';
+import { FilePicker, FormWrapper } from '../../widgets';
 import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { downloadBlob, embedText } from '../services/pngutil';
+import { downloadBlob, embedText } from '../../services/pngutil';
+import { Link } from 'react-router-dom';
 
 
 const Embed = () => {
@@ -31,7 +32,7 @@ const Embed = () => {
 				<h1 className="mb-3">Embed Text into PNG</h1>
 				<p>This page encrypts and then embeds a message into a PNG file by making imperceptible changes to some pixels.</p>
 				<p>Once the message is embedded, you will be prompted to save the altered PNG file.</p>
-				<p>To extract the embeded message, go to the <a href="/extract">Extract</a> page.</p>
+				<p>To extract the embeded message, go to the <Link to="/png/extract">Extract</Link> page.</p>
 
 				<FormWrapper>
 					<Form>

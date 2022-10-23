@@ -13,11 +13,11 @@ You can see it in action at https://stegano.imprologic.com .
 The source code is on Github: https://github.com/imprologic/steganography-js
 
 
-## How does it work
+## How does it work?
 
 TODO
 
-## Why PNG
+## Why PNG?
 
 PNG is both a common file format, and a lossless algortihms.
 
@@ -50,3 +50,29 @@ Several reasons:
 1. Inspecting the code in an app is a lot more difficult - you'd have to trust that the publisher will not steal the messages you embed.
 
 2. The mainstream app stores are notorious for banning apps on a whim. A domain name I own seems a lot safer in that respect.
+
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.\
+You may also see any lint errors in the console.
+
+### `npm test`
+
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `npm run build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!

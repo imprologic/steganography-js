@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Embed, Extract } from './pages';
+import { Home, PngEmbed, PngExtract } from './pages';
 
 import './App.css';
 import { MainMenu } from './widgets';
@@ -11,8 +11,9 @@ function App() {
         <MainMenu />
       </header>
       <Routes>
-        <Route path="/" element={<Embed />} />
-        <Route path="/extract" element={<Extract />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/png/embed" element={<PngEmbed />} />
+        <Route path="/png/extract" element={<PngExtract />} />
       </Routes>
     </Router>
   );
