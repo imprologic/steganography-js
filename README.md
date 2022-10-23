@@ -1,70 +1,43 @@
-# Getting Started with Create React App
+# steganography-js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[Steganography](https://en.wikipedia.org/wiki/Steganography) is the practice of concealing a message within another message or a physical object.
 
-## Available Scripts
+In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video. 
 
-In the project directory, you can run:
 
-### `npm start`
+## Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This repository provides a web-based utility allowing (for now) the hiding of a text in a PNG file.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+You can see it in action at https://stegano.imprologic.com .
+The source code is on Github: https://github.com/imprologic/steganography-js
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How does it work
 
-### `npm run build`
+TODO
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Why PNG
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+PNG is both a common file format, and a lossless algortihms.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Being a common file format, it shouldn't normally raise suspicions.
 
-### `npm run eject`
+The lossless aspect of PNGs ensures that the embedded data is not lost - assuming that you do not modify the resulting file in any way once the message is embedded.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## What can I hide?
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Use your own judgement. You can hide passwords, private keys, recovery phrases... as long it's a relatively short text, you can hide it using this utility.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Is it safe?
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to indentify unexpected variations in the image's pixels.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+For this reason, I strongly advise using PNGs with lots of details like landscapes (isn't nature amazing?) rather than purely geometrical shapes.
 
-### Code Splitting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Will this utility always be available?
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+I sure hope so, but there are no guarantees. I strongly recommend getting a copy of this repository and running your own steganography utility.
