@@ -25,7 +25,7 @@ const Home = () => {
 				</ol>
 
 				<h2>Open source</h2>
-				<p>This is an open-source project, we strongly encourage you to examine its source code on <a href="https://github.com/imprologic/steganography-js" target="_blank">Github</a></p>
+				<p>This is an open-source project, we strongly encourage you to examine its source code on <a href="https://github.com/imprologic/steganography-js" target="_blank" rel="noreferrer">Github</a></p>
 			</div>
 		</>
 	);

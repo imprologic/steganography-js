@@ -7,21 +7,31 @@ import { downloadBlob, embedText } from '../../services/pngutil';
 import { Link } from 'react-router-dom';
 
 
+const getFileName = (filePath) => {
+	const pathParts = filePath.split('\\');
+	const [ fileName, extension ] = pathParts[pathParts.length -1].split('.');
+	const timeStamp = Math.round(Date.now() / 1000);
+	return [ fileName + '-' + timeStamp, extension ].join('.');
+};
+
+
 const Embed = () => {
 
 	const [ content, setContent ] = useState(null);
+	const [ filePath, setFilePath ] = useState(null);
 	const [ text, setText ] = useState(null);
 	const [ pass, setPass ] = useState(null);
 
-	const onImageSelected = (content) => {
+	const onImageSelected = (content, filePath) => {
 		setContent(content);
+		setFilePath(filePath);
 	};
 
 
 	const process = async () => {
 		if (content) {
 			const file = await embedText(content, text, pass);
-			downloadBlob(file, 'test.png', 'image/png');
+			downloadBlob(file, getFileName(filePath), 'image/png');
 		}
 	};
 
