@@ -41,3 +41,12 @@ For this reason, I strongly advise using PNGs with lots of details like landscap
 ## Will this utility always be available?
 
 I sure hope so, but there are no guarantees. I strongly recommend getting a copy of this repository and running your own steganography utility.
+
+
+## Why is this not an installable app?
+
+Several reasons:
+
+1. Inspecting the code in an app is a lot more difficult - you'd have to trust that the publisher will not steal the messages you embed.
+
+2. The mainstream app stores are notorious for banning apps on a whim. A domain name I own seems a lot safer in that respect.
