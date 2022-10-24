@@ -13,7 +13,7 @@ code {
 }
 
 .navbar, .navbar-default {
-  background: linear-gradient(to right, #003366, #002244);
+  background-color: #003366 !important;
 }
 
 .nav-link {
