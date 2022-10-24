@@ -3,7 +3,7 @@ import { Navbar, Container, Nav } from 'react-bootstrap';
 
 const MainMenu = () => {
 	return (
-		<Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+		<Navbar collapseOnSelect expand="lg" variant="dark" bg="dark">
 			<Container>
 				<Navbar.Brand href="/">steganography-js</Navbar.Brand>
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
