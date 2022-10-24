@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#002B4D" />
+  <meta name="theme-color" content="#4539a" />
   <meta name="description" content="steganography-js: hide encrypted text in PNG files" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
   <!--
@@ -43,8 +43,8 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./serviceworker.js')
-        .then((reg) => console.log('Success: ', reg.scope))
-        .catch((err) => console.log('Failure: ', err));
+        .then((reg) => console.log('serviceWorker success: ', reg.scope))
+        .catch((err) => console.log('serviceWorker failure: ', err));
     })
   }
 </script>

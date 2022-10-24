@@ -2,11 +2,13 @@
   "name": "steganography-js",
   "version": "0.1.0",
   "private": false,
+  "license": "GPL-3.0-only",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "react-scripts build && wrangler publish"
   },
   "dependencies": {
     "bootstrap": "^5.2.0",

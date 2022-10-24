@@ -61,6 +61,10 @@ Thumbs.db
 # production
 /build
 
+# cludflare
+wrangler.toml
+workers-site/
+
 # misc
 .DS_Store
 .env.local

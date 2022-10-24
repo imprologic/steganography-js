@@ -7,14 +7,12 @@ const FilePicker = ({
 
 	const makeReadHandler = (filePath) => {
 		return (event) => {
-			console.log(event);
 			const content = event.target.result;
 			onImageSelected(content, filePath);
 		};
 	};
 
 	const changeHandler = (event) => {
-		console.log(event);
 		const [ file ] = event.target.files;
 		const reader = new FileReader();
 		reader.onload = makeReadHandler(event.target.value);
