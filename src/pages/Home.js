@@ -26,6 +26,12 @@ const Home = () => {
 
 				<h2>Open source</h2>
 				<p>This is an open-source project, we strongly encourage you to examine its source code on <a href="https://github.com/imprologic/steganography-js" target="_blank" rel="noreferrer">Github</a></p>
+
+				<h2>Terms of use</h2>
+				<p>This software is provided as is, without guarantees of any kind. 
+				By using it, you agree not to hold the developer(s) liable for any damages you may incur.</p>
+
+				<p>Please make sure you don't forget your passphrase (password) or lose the resulting PNGs.</p>
 			</div>
 		</>
 	);
