@@ -15,7 +15,11 @@ The source code is on Github: https://github.com/imprologic/steganography-js
 
 ## How does it work?
 
-TODO
+This utility makes imperceptible changes to the least significant byte (LSB) of every base color (RGB) in every pixel of the original PNG file. \
+It does not alter the alpha channel, as this may raise suspicions.
+
+The clear text provided by the user is encrypted and stored at a random location in you PNG. The encrypted message (ciphertext) is "wrapped" by a prefix and a suffix derived from the hash of your passphrase.
+
 
 ## Why PNG?
 
@@ -35,7 +39,7 @@ Use your own judgement. You can hide passwords, private keys, recovery phrases..
 
 As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to indentify unexpected variations in the image's pixels.
 
-For this reason, I strongly advise using PNGs with lots of details like landscapes (isn't nature amazing?) rather than purely geometrical shapes.
+For this reason, I strongly advise using **PNGs with lots of details** like landscapes (isn't nature amazing?), rather than purely geometrical shapes.
 
 
 ## Will this utility always be available?
@@ -43,13 +47,22 @@ For this reason, I strongly advise using PNGs with lots of details like landscap
 I sure hope so, but there are no guarantees. I strongly recommend getting a copy of this repository and running your own steganography utility.
 
 
-## Why is this not an installable app?
+## Why is this not a native mobile app?
 
 Several reasons:
 
 1. Inspecting the code in an app is a lot more difficult - you'd have to trust that the publisher will not steal the messages you embed.
-
 2. The mainstream app stores are notorious for banning apps on a whim. A domain name I own seems a lot safer in that respect.
+3. The presence of a steganograhy app on your mobile device may be seen as a clear indication that you used this technique at some point.
+
+However, you can install this as a PWA app by clicking the "download" icon in the top-right of you browser, or by accepting the prompt on a mobile device.
+
+## Terms of use
+
+This software is provided as is, without guarantees of any kind. \
+By using it, you agree not to hold the developer(s) liable for any damages you may incur.
+
+Please make sure you don't forget your passphrase (password) or lose the resulting PNGs. 
 
 
 ## Available Scripts
