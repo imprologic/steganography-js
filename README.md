@@ -37,7 +37,7 @@ Use your own judgement. You can hide passwords, private keys, recovery phrases..
 
 ## Is it safe?
 
-As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to indentify unexpected variations in the image's pixels.
+As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to identify unexpected variations in the image's pixels.
 
 For this reason, I strongly advise using **PNGs with lots of details** like landscapes (isn't nature amazing?), rather than purely geometrical shapes.
 
