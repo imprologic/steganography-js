@@ -18,8 +18,12 @@ const Extract = () => {
 
 	const process = async () => {
 		if (content) {
-			const text = await extractText(content, pass);
-			setText(text);
+			try {
+				const text = await extractText(content, pass);
+				setText(text);
+			} catch (e) {
+				alert(e);
+			}
 		}
 	};
 

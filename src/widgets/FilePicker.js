@@ -22,7 +22,7 @@ const FilePicker = ({
 
 	return (
 		<>
-			<Form.Control type="file" name="file" onChange={changeHandler} accept=".png" />
+			<Form.Control type="file" name="file" onChange={changeHandler} accept=".png" required={true} />
 		</>
 	);
 };

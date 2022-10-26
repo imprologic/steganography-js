@@ -30,8 +30,12 @@ const Embed = () => {
 
 	const process = async () => {
 		if (content) {
-			const file = await embedText(content, text, pass);
-			downloadBlob(file, getFileName(filePath), 'image/png');
+			try {
+				const file = await embedText(content, text, pass);
+				downloadBlob(file, getFileName(filePath), 'image/png');
+			} catch (e) {
+				alert(e);
+			}
 		}
 	};
 
@@ -55,13 +59,13 @@ const Embed = () => {
 
 						<FormGroup className="mt-3">
 							<Form.Label>Message</Form.Label>
-							<Form.Control as="textarea" onChange={ (e) => setText(e.target.value) } />
+							<Form.Control as="textarea" onChange={ (e) => setText(e.target.value) } required={true} />
 							<Form.Text className="text-muted">The mesage to embed in the above file.</Form.Text>
 						</FormGroup>
 
 						<FormGroup className="mt-3">
 							<Form.Label>Passphrase</Form.Label>
-							<Form.Control type="text" onChange={ (e) => setPass(e.target.value) } />
+							<Form.Control type="text" onChange={ (e) => setPass(e.target.value) } required={true} />
 							<Form.Text className="text-muted">Passphrase used to encrypt the above message. Make sure to remember the passphrase, or you won't be able to recover the message.</Form.Text>
 						</FormGroup>
 
