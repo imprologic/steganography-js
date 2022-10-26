@@ -18,7 +18,7 @@ The source code is on Github: https://github.com/imprologic/steganography-js
 This utility makes imperceptible changes to the least significant byte (LSB) of every base color (RGB) in every pixel of the original PNG file. \
 It does not alter the alpha channel, as this may raise suspicions.
 
-The clear text provided by the user is encrypted and stored at a random location in you PNG. The encrypted message (ciphertext) is "wrapped" by a prefix and a suffix derived from the hash of your passphrase.
+The clear text provided by the user is encrypted and stored at a random location in your PNG. The encrypted message (ciphertext) is "wrapped" by a prefix and a suffix derived from the hash of your passphrase.
 
 
 ## Why PNG?
