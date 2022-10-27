@@ -42,6 +42,22 @@ As always, the answer is: it depends. A very determined "foe" who knows that you
 For this reason, I strongly advise using **PNGs with lots of details** like landscapes (isn't nature amazing?), rather than purely geometrical shapes.
 
 
+## Best practices
+
+A longer, more complex password is always better.
+
+Using PNG files you generated yourself is better than a random PNG off the internet. A determined foe can do an image search and then compare your altered PNG with the original, therefore determining that your version may contain hidden data.
+
+Alway delete the original, keep only the altered version of the PNG.
+
+Do not embed additional messages in a PNG that already has an embedded message. There's a good chance you won't be able to recover previous messages.
+
+Do not reuse the same original PNG for multiple messages. A determined foe may compare the altered PNGs and determine that they may contain hidden data.
+
+Do not reuse the same password in different PNGs. A byte-level comparison of the altered PNGs may show similarities between them. \
+Slightly changing your strong password from one PNG to the next may be good enough in this scenario.
+
+
 ## Will this utility always be available?
 
 I sure hope so, but there are no guarantees. I strongly recommend getting a copy of this repository and running your own steganography utility.
