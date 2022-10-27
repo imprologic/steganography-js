@@ -7,11 +7,15 @@ import { downloadBlob, embedText } from '../../services/pngutil';
 import { Link } from 'react-router-dom';
 
 
-const getFileName = (filePath) => {
+/**
+ * @internal
+ * @param {string} filePath 
+ */
+export const getFileName = (filePath) => {
 	const pathParts = filePath.split('\\');
-	const [ fileName, extension ] = pathParts[pathParts.length -1].split('.');
-	const timeStamp = Math.round(Date.now() / 1000);
-	return [ fileName + '-' + timeStamp, extension ].join('.');
+	const [ fileNameWithoutExtension ] = pathParts[pathParts.length -1].split(/\.png$/);
+	const [ , suffix ] = String(Math.random()).split('.');
+	return `${fileNameWithoutExtension}-${suffix}.png`;
 };
 
 
