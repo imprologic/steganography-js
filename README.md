@@ -23,7 +23,7 @@ The clear text provided by the user is encrypted and stored at a random location
 
 ## Why PNG?
 
-PNG is both a common file format, and a lossless algortihms.
+PNG is both a common file format, and a lossless algortihm.
 
 Being a common file format, it shouldn't normally raise suspicions.
 
@@ -48,7 +48,7 @@ A longer, more complex password is always better.
 
 Using PNG files you generated yourself is better than a random PNG off the internet. A determined foe can do an image search and then compare your altered PNG with the original, therefore determining that your version may contain hidden data.
 
-Alway delete the original, keep only the altered version of the PNG.
+Always delete the original, keep only the altered version of the PNG.
 
 Do not embed additional messages in a PNG that already has an embedded message. There's a good chance you won't be able to recover previous messages.
 
@@ -69,7 +69,7 @@ Several reasons:
 
 1. Inspecting the code in an app is a lot more difficult - you'd have to trust that the publisher will not steal the messages you embed.
 2. The mainstream app stores are notorious for banning apps on a whim. A domain name I own seems a lot safer in that respect.
-3. The presence of a steganograhy app on your mobile device may be seen as a clear indication that you used this technique at some point.
+3. The presence of a steganography app on your mobile device may be seen as a clear indication that you used this technique at some point.
 
 However, you can install this as a PWA app by clicking the "download" icon in the top-right of you browser, or by accepting the prompt on a mobile device.
 
