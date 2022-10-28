@@ -15,10 +15,10 @@ The source code is on Github: https://github.com/imprologic/steganography-js
 
 ## How does it work?
 
-This utility makes imperceptible changes to the least significant byte (LSB) of every base color (RGB) in every pixel of the original PNG file. \
+This utility makes imperceptible changes to the least significant byte (LSB) of every base color (RGB) in some of the pixels of the original PNG file. \
 It does not alter the alpha channel, as this may raise suspicions.
 
-The clear text provided by the user is encrypted and stored at a random location in you PNG. The encrypted message (ciphertext) is "wrapped" by a prefix and a suffix derived from the hash of your passphrase.
+The clear text provided by the user is encrypted and stored at a random location in your PNG. The encrypted message (ciphertext) is "wrapped" by a prefix and a suffix derived from the hash of your passphrase.
 
 
 ## Why PNG?
@@ -37,9 +37,25 @@ Use your own judgement. You can hide passwords, private keys, recovery phrases..
 
 ## Is it safe?
 
-As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to indentify unexpected variations in the image's pixels.
+As always, the answer is: it depends. A very determined "foe" who knows that your PNG files may include hidden messages may use heuristics to identify unexpected variations in the image's pixels.
 
 For this reason, I strongly advise using **PNGs with lots of details** like landscapes (isn't nature amazing?), rather than purely geometrical shapes.
+
+
+## Best practices
+
+A longer, more complex password is always better.
+
+Using PNG files you generated yourself is better than a random PNG off the internet. A determined foe can do an image search and then compare your altered PNG with the original, therefore determining that your version may contain hidden data.
+
+Alway delete the original, keep only the altered version of the PNG.
+
+Do not embed additional messages in a PNG that already has an embedded message. There's a good chance you won't be able to recover previous messages.
+
+Do not reuse the same original PNG for multiple messages. A determined foe may compare the altered PNGs and determine that they may contain hidden data.
+
+Do not reuse the same password in different PNGs. A byte-level comparison of the altered PNGs may show similarities between them. \
+Slightly changing your strong password from one PNG to the next may be good enough in this scenario.
 
 
 ## Will this utility always be available?
