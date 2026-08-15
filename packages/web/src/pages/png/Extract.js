@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { extractText } from '../../services/pngutil';
+import { extractText } from '@steganography-js/core';
 
 
 const Extract = () => {

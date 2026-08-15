@@ -1,13 +1,13 @@
-import { PNG } from 'pngjs/browser';
-import { getHash, encrypt, decrypt } from './cipher';
+import { PNG } from 'pngjs';
+import { getHash, encrypt, decrypt } from './cipher.js';
 
 import { 
 	bytesToBits,
 	bitsToBytes
-} from './bitlib';
+} from './bitlib.js';
 
-import { findValues, setLsbWithMask, getLsbWithMask } from './arraylib';
-import { stringToBytes, bytesToString } from './stringlib';
+import { findValues, setLsbWithMask, getLsbWithMask } from './arraylib.js';
+import { stringToBytes, bytesToString } from './stringlib.js';
 
 
 /**
@@ -90,20 +90,15 @@ export const writeToPngData = (pngData, text, password) => {
 	const wrappedBytes = getWrappedBytes(text, password);
 	const bits = bytesToBits(wrappedBytes);
 	const bitCount = bits.length;
-	console.log('bitCount:', bitCount);
 	const neededPixels = Math.ceil(bitCount / 3);
-	console.log('neededPixels:', neededPixels);
 	const actualPixels = pngData.length / 4;
-	console.log('actualPixels:', actualPixels);
 	if (neededPixels > actualPixels) {
 		throw new Error(`PNG should have at least ${neededPixels} pixels, the actual pixel count is ${actualPixels}.`);
 	}
 	// TODO: Get the index of an aria with high color variance.
 	// TODO: Move this to a separate function to make it testable
 	const startPixel = Math.round((actualPixels - neededPixels) * Math.random()); 
-	console.log('startPixel:', startPixel);
 	const startIndex = startPixel * 4;
-	console.log('startIndex:', startIndex);
 	setLsbWithMask(pngData, startIndex, bits, [1, 1, 1, 0]);
 };
 
@@ -119,14 +114,12 @@ export const readFromPngData = (pngData, password) => {
 	// find the prefix
 	const prefix = bytesToBits(getPrefix(password));
 	const prefixIndex = findValues(bits, prefix);
-	console.log('prefixIndex:', prefixIndex);
 	if (prefixIndex === -1) {
 		throw new Error('Prefix not found');
 	}
 	// find the suffix after the prefix (required when prefix === suffix, e.g. palindromic passwords)
 	const suffix = bytesToBits(getSuffix(password));
 	const suffixIndex = findValues(bits, suffix, prefixIndex + prefix.length);
-	console.log('suffixIndex:', suffixIndex);
 	if (suffixIndex === -1) {
 		throw new Error('Suffix not found');
 	}
@@ -165,38 +158,3 @@ export const extractText = async (arrayBuffer, password) => {
 	const png = await arrayBufferToPng(arrayBuffer);
 	return readFromPngData(png.data, password);
 }
-
-
-/**
- * Download a file by creating a Blob and injecting it in an object URL
- * @param {Buffer} buffer The buffer containing the file data
- * @param {*} fileName The name of the file to download
- * @param {*} mimeType The content type of the file to download
- */
-export const downloadBlob = (buffer, fileName, mimeType) => {
-	const blob = new Blob([buffer], {
-		type: mimeType
-	});
-	const url = window.URL.createObjectURL(blob);
-	downloadURL(url, fileName);
-	setTimeout(function () {
-		return window.URL.revokeObjectURL(url);
-	}, 1000);
-};
-
-
-
-/**
- * Download a file from a base64 URL.
- * @param {string} data 
- * @param {string} fileName 
- */
-export const downloadURL = (data, fileName) => {
-	const a = document.createElement('a');
-	a.href = data;
-	a.download = fileName;
-	document.body.appendChild(a);
-	a.style = 'display: none';
-	a.click();
-	a.remove();
-};

@@ -2,7 +2,7 @@ import {
 	getHash,
 	encrypt, 
 	decrypt,
-} from './cipher';
+} from './cipher.js';
 
 
 /**

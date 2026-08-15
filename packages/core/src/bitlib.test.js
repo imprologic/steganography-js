@@ -5,7 +5,7 @@ import {
 	setLsb,
 	bytesToBits,
 	bitsToBytes,
-} from './bitlib';
+} from './bitlib.js';
 
 
 

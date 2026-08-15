@@ -1,5 +1,7 @@
-import { AES, enc } from 'crypto-js';
-import sha256 from 'crypto-js/sha256';
+import CryptoJS from 'crypto-js';
+import sha256 from 'crypto-js/sha256.js';
+
+const { AES, enc } = CryptoJS;
 
 /**
  * Return the sha2 hash of a text as an array of bytes.

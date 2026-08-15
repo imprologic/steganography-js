@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 
-import { downloadBlob, embedText } from '../../services/pngutil';
+import { embedText } from '@steganography-js/core';
+import { downloadBlob } from '../../services/download';
 import { Link } from 'react-router-dom';
 
 
