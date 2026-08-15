@@ -54,7 +54,7 @@ const Embed = () => {
 				<p>To extract the embeded message, go to the <Link to="/png/extract">Extract</Link> page.</p>
 
 				<FormWrapper>
-					<Form>
+					<Form onSubmit={(e) => { e.preventDefault(); process(); }}>
 
 						<FormGroup className="mt-1">
 							<Form.Label>PNG in which to embed the text</Form.Label>
@@ -74,7 +74,7 @@ const Embed = () => {
 							<Form.Text className="text-muted">Passphrase used to encrypt the above message. Make sure to remember the passphrase, or you won't be able to recover the message.</Form.Text>
 						</FormGroup>
 
-						<Button variant="primary" type="button" onClick={process} className="mt-4">
+						<Button variant="primary" type="submit" className="mt-4">
 							Embed
 						</Button>
 					</Form>
