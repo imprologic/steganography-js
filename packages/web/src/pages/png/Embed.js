@@ -1,4 +1,4 @@
-import { FilePicker, FormWrapper } from '../../widgets';
+import { FilePicker, FormWrapper, PassphraseField } from '../../widgets';
 import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -70,7 +70,7 @@ const Embed = () => {
 
 						<FormGroup className="mt-3">
 							<Form.Label>Passphrase</Form.Label>
-							<Form.Control type="text" onChange={ (e) => setPass(e.target.value) } required={true} />
+							<PassphraseField onChange={ (e) => setPass(e.target.value) } required={true} />
 							<Form.Text className="text-muted">Passphrase used to encrypt the above message. Make sure to remember the passphrase, or you won't be able to recover the message.</Form.Text>
 						</FormGroup>
 
