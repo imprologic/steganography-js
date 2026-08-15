@@ -10,6 +10,7 @@
   "main": "src/cli.js",
   "scripts": {
     "start": "node src/cli.js",
+    "build": "node --check src/cli.js",
     "test": "node --test src/cli.test.js"
   },
   "dependencies": {
