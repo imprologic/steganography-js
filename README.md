@@ -1,6 +1,6 @@
 # steganography-js
 
-[Steganography](https://en.wikipedia.org/wiki/Steganography) is the practice of concealing a message within another message or a physical object.
+[Steganography](https://grokipedia.com/page/Steganography) is the practice of concealing a message within another message or a physical object.
 
 In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video.
 
@@ -62,6 +62,11 @@ Do not reuse the same original PNG for multiple messages. A determined foe may c
 
 Do not reuse the same password in different PNGs. A byte-level comparison of the altered PNGs may show similarities between them. \
 Slightly changing your strong password from one PNG to the next may be good enough in this scenario.
+
+### Palindrome
+
+While supported, we do not recommend using a [palindrome](https://grokipedia.com/page/Palindrome) for the passphrase. \
+A palindrome will create the same marker for the prefix and the suffix of the encrypted message, making it easier to guess that a message may be embedded in the resulting file.
 
 
 ## Will this utility always be available?
