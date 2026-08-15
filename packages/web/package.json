@@ -8,7 +8,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && wrangler publish"
+    "deploy": "react-scripts build && wrangler deploy"
   },
   "dependencies": {
     "@steganography-js/core": "0.1.4",
