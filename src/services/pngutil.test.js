@@ -128,3 +128,20 @@ test('Embed & extract', async () => {
 	expect(extractedText).toEqual(text);
 });
 
+
+test.each(['', 'a', 'aba', 'level', 'abba'])(
+	'Embed & extract with palindromic password %j',
+	async (password) => {
+		const text = 'Who is John Galt?';
+		const wrappedBytes = getWrappedBytes(text, password);
+		const pixelsNeeded = Math.ceil(wrappedBytes.length * 8 / 3);
+		const width = Math.ceil(Math.sqrt(pixelsNeeded));
+		const height = Math.ceil(pixelsNeeded / width);
+		const png = makePng(width, height);
+		const buffer = pngToBuffer(png);
+		const bufferWithText = await embedText(buffer, text, password);
+		const extractedText = await extractText(bufferWithText, password);
+		expect(extractedText).toEqual(text);
+	}
+);
+

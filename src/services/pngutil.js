@@ -123,11 +123,11 @@ export const readFromPngData = (pngData, password) => {
 	if (prefixIndex === -1) {
 		throw new Error('Prefix not found');
 	}
-	// find the suffix
+	// find the suffix after the prefix (required when prefix === suffix, e.g. palindromic passwords)
 	const suffix = bytesToBits(getSuffix(password));
-	const suffixIndex = findValues(bits, suffix);
+	const suffixIndex = findValues(bits, suffix, prefixIndex + prefix.length);
 	console.log('suffixIndex:', suffixIndex);
-	if (suffixIndex <= 0) {
+	if (suffixIndex === -1) {
 		throw new Error('Suffix not found');
 	}
 	// extract the cipher
