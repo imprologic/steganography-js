@@ -1,4 +1,4 @@
-import { FilePicker, FormWrapper } from '../../widgets';
+import { FilePicker, FormWrapper, PassphraseField } from '../../widgets';
 import { useState } from 'react';
 import { FormGroup, Form } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
@@ -42,7 +42,7 @@ const Extract = () => {
 
 						<FormGroup className="mt-3">
 							<Form.Label>Passphrase</Form.Label>
-							<Form.Control type="text" onChange={ (e) => setPass(e.target.value) } />
+							<PassphraseField onChange={ (e) => setPass(e.target.value) } />
 							<Form.Text className="text-muted">Passphrase used to encrypt the above message.</Form.Text>
 						</FormGroup>
 
