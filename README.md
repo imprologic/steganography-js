@@ -1,15 +1,21 @@
 # steganography-js
 
-[Steganography](https://en.wikipedia.org/wiki/Steganography) is the practice of concealing a message within another message or a physical object.
+[Steganography](https://grokipedia.com/page/Steganography) is the practice of concealing a message within another message or a physical object.
 
-In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video. 
+In computing/electronic contexts, a computer file, message, image, or video is concealed within another file, message, image, or video.
 
 
 ## Overview
 
-This repository provides a web-based utility allowing (for now) the hiding of a text in a PNG file.
+This monorepo provides utilities for hiding text in a PNG file:
 
-You can see it in action at https://stegano.imprologic.com .
+| Package | Description |
+|---------|-------------|
+| [`@steganography-js/core`](packages/core) | Shared embed/extract and crypto logic |
+| [`@steganography-js/web`](packages/web) | Browser UI (Create React App) |
+| [`@steganography-js/cli`](packages/cli) | Command-line embed/extract tool |
+
+You can see the web UI at https://stegano.imprologic.com .
 The source code is on Github: https://github.com/imprologic/steganography-js
 
 
@@ -57,6 +63,11 @@ Do not reuse the same original PNG for multiple messages. A determined foe may c
 Do not reuse the same password in different PNGs. A byte-level comparison of the altered PNGs may show similarities between them. \
 Slightly changing your strong password from one PNG to the next may be good enough in this scenario.
 
+### Palindrome
+
+While supported, we do not recommend using a [palindrome](https://grokipedia.com/page/Palindrome) for the passphrase. \
+A palindrome will create the same marker for the prefix and the suffix of the encrypted message, making it easier to guess that a message may be embedded in the resulting file.
+
 
 ## Will this utility always be available?
 
@@ -78,30 +89,48 @@ However, you can install this as a PWA app by clicking the "download" icon in th
 This software is provided as is, without guarantees of any kind. \
 By using it, you agree not to hold the developer(s) liable for any damages you may incur.
 
-Please make sure you don't forget your passphrase (password) or lose the resulting PNGs. 
+Please make sure you don't forget your passphrase (password) or lose the resulting PNGs.
+
+
+## Setup
+
+```bash
+yarn install
+```
+
+Requires Node from [`.nvmrc`](.nvmrc) (currently v23).
 
 
 ## Available Scripts
 
-In the project directory, you can run:
+From the repository root:
 
 ### `yarn start`
 
-Runs the app in the development mode.\
+Runs the web app in development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs tests for all workspace packages.
 
 ### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Builds the web app for production to `packages/web/build`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `yarn stegano -- --help`
+
+Runs the CLI. Examples:
+
+```bash
+yarn stegano -- embed -i cover.png -o stego.png -p 'secret' -m 'hello'
+yarn stegano -- extract -i stego.png -p 'secret'
+```
+
+You can also target a package directly:
+
+```bash
+yarn workspace @steganography-js/web start
+yarn workspace @steganography-js/core test
+yarn workspace @steganography-js/cli start -- extract -i stego.png -p 'secret'
+```

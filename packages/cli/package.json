@@ -1,0 +1,22 @@
+{
+  "name": "@steganography-js/cli",
+  "version": "0.1.4",
+  "private": false,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "bin": {
+    "stegano": "./src/cli.js"
+  },
+  "main": "src/cli.js",
+  "scripts": {
+    "start": "node src/cli.js",
+    "build": "node --check src/cli.js",
+    "test": "node --test src/cli.test.js"
+  },
+  "dependencies": {
+    "@steganography-js/core": "0.1.4"
+  },
+  "devDependencies": {
+    "pngjs": "^6.0.0"
+  }
+}

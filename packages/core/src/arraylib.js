@@ -1,4 +1,4 @@
-import { getLsb, setLsb } from './bitlib';
+import { getLsb, setLsb } from './bitlib.js';
 
 
 /**

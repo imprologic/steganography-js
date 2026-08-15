@@ -51,16 +51,17 @@ Thumbs.db
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-/node_modules
+node_modules/
 /.pnp
 .pnp.js
 package-lock.json
 
 # testing
-/coverage
+coverage/
 
 # production
-/build
+build/
+packages/*/build/
 
 # cludflare
 wrangler.toml
@@ -73,6 +74,5 @@ workers-site/
 .env.test.local
 .env.production.local
 
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# Yarn local cache (used in some environments)
+.yarn-cache/

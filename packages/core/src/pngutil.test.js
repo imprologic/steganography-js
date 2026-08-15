@@ -7,15 +7,15 @@ import {
 	arrayBufferToPng, 
 	embedText, 
 	extractText
-} from './pngutil';
+} from './pngutil.js';
 
 import {
 	bytesToHexString
-} from './cipher.test';
-import { decrypt } from './cipher';
-import { bytesToString } from './stringlib';
-import { getLsbWithMask, findValues } from './arraylib';
-import { bitsToBytes, bytesToBits } from './bitlib';
+} from './cipher.test.js';
+import { decrypt } from './cipher.js';
+import { bytesToString } from './stringlib.js';
+import { getLsbWithMask, findValues } from './arraylib.js';
+import { bitsToBytes, bytesToBits } from './bitlib.js';
 import { PNG } from 'pngjs';
 
 

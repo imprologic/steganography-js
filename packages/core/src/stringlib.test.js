@@ -1,7 +1,7 @@
 import { 
 	stringToBytes, 
 	bytesToString,
-} from './stringlib';
+} from './stringlib.js';
 
 
 test('stringToBytes', () => {

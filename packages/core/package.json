@@ -1,0 +1,32 @@
+{
+  "name": "@steganography-js/core",
+  "version": "0.1.4",
+  "private": false,
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "browser": {
+    "pngjs": "pngjs/browser.js"
+  },
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --coverage"
+  },
+  "dependencies": {
+    "crypto-js": "^4.1.1",
+    "pngjs": "^6.0.0"
+  },
+  "devDependencies": {
+    "@types/pngjs": "^6.0.1",
+    "jest": "^29.7.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {},
+    "testMatch": [
+      "<rootDir>/src/**/*.test.js"
+    ]
+  }
+}

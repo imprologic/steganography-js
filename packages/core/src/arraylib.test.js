@@ -1,4 +1,4 @@
-import { findValues, getLsbWithMask, setLsbWithMask } from './arraylib';
+import { findValues, getLsbWithMask, setLsbWithMask } from './arraylib.js';
 
 
 describe('findValues', () => {
