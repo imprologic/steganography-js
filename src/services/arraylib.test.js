@@ -41,7 +41,15 @@ describe('findValues', () => {
 		const result = findValues(data, values);
 		expect(result).toEqual(3);
 	});
-	
+
+
+	test('findValues - startIndex skips earlier match', () => {
+		const data = [1, 2, 3, 1, 2, 9];
+		const values = [1, 2];
+		expect(findValues(data, values)).toEqual(0);
+		expect(findValues(data, values, 1)).toEqual(3);
+		expect(findValues(data, values, 4)).toEqual(-1);
+	});
 
 });
 
