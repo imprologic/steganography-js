@@ -32,7 +32,7 @@ const Extract = () => {
 			<div className="page-wrapper">
 				<h1>Extract Text from PNG</h1>
 				<FormWrapper>
-					<Form>
+					<Form onSubmit={(e) => { e.preventDefault(); process(); }}>
 
 						<FormGroup className="mt-1">
 							<Form.Label>PNG in which the text was embedded</Form.Label>
@@ -46,15 +46,22 @@ const Extract = () => {
 							<Form.Text className="text-muted">Passphrase used to encrypt the above message.</Form.Text>
 						</FormGroup>
 
-						<Button variant="primary" type="button" onClick={process} className="mt-4">
+						<Button variant="primary" type="submit" className="mt-4">
 							Extract
 						</Button>
 
 						<hr />
 
 						<FormGroup className="mt-3">
-							<Form.Control as="textarea" value={text} placeholder="Extracted message will be shown here" readOnly />
+							<Form.Control 
+								as="textarea" 
+								value={text} 
+								placeholder="Extracted message will be shown here" 
+								readOnly 
+								rows={10} 
+							/>
 						</FormGroup>
+
 
 					</Form>
 				</FormWrapper>
